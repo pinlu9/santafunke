@@ -4,7 +4,7 @@ class UserController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      flash[:message] = "Good job, you're now an active sinner. Log in, to repent!"
+      flash[:message] = "You are logged in!"
     else
       flash[:message] = @user.errors.full_messages.to_sentence
     end
