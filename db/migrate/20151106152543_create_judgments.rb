@@ -1,0 +1,10 @@
+class CreateJudgments < ActiveRecord::Migration
+  def change
+    create_table :judgments do |t|
+      t.references :child
+      t.references :elf
+
+      t.timestamps null: false
+    end
+  end
+end
