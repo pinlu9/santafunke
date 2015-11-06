@@ -11,20 +11,19 @@
               value="<%= form_authenticity_token %>">
 
 
-    <div class="input-field col s6">
-      <input type="first_name"
-             placeholder="Firstname"><br/>
+      <input type="text"
+              name ="user[name]"
+             placeholder="Name"><br/>
 
-      <input type="last_name"
-             placeholder="Last Name"><br/>
-
-      <input type="address"
+      <input type="text"
+             name ="user[address]"
              placeholder="address"><br/>
 
-      <input type="age"
+      <input type="text"
+              name ="user[age]"
              placeholder="age"><br/>
 
-      <input type="name"
+      <input type="text"
               name ="user[email]"
               placeholder="Your email address"><br/>
 
@@ -32,12 +31,9 @@
               name="user[password]"
               placeholder="Password"><br/>
       <input type ="submit"
-              class="btn waves-effect waves-light"
               value="sign up">
-
-      </div>
     </form>
-</div>
+
 
 
 <!-- sign in -->
@@ -45,19 +41,16 @@
 
 <h3>Please sign in</h3>
 
-    <form
+<form
           action ="<%= users_path %>"
           method="POST"
           autocomplete="false">
 
-      <input  type="hidden"
+      <input  type="text"
               name="authenticity_token"
               value="<%= form_authenticity_token %>">
 
-
-    <div class="input-field col s6">
-
-      <input type="name"
+      <input type="text"
               name ="user[email]"
               placeholder="Your email address"><br/>
 
@@ -65,9 +58,5 @@
               name="user[password]"
               placeholder="Password"><br/>
       <input type ="submit"
-              class="btn waves-effect waves-light"
-              value="sign up">
-
-      </div>
-    </form>
-</div>
+              value="login">
+</form>
