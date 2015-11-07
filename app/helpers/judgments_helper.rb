@@ -1,2 +1,2 @@
-module JudgementsHelper
+module JudgmentsHelper
 end
