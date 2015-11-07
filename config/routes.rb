@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'application#welcome'
 
-  resources :users
+  resources :users, defaults: { format: :json }
   resources :judgments
   resources :toys
   resources :presents
