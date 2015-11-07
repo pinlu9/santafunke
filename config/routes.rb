@@ -2,10 +2,12 @@ Rails.application.routes.draw do
 
   root 'application#welcome'
 
+
+  # this is temporary for now. We will have to use `only`/`except` to ensure that we have correct default formats for different paths
   resources :users, defaults: { format: :json }
-  resources :judgments
-  resources :toys
-  resources :presents
+  resources :judgments, defaults: { format: :json }
+  resources :toys, defaults: { format: :json }
+  resources :presents, defaults: { format: :json }
 
 
   # The priority is based upon order of creation: first created -> highest priority.
