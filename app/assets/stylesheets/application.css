@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+
+ div.alert {
+   background: lightgreen;
+   border: 1px solid black;
+   border-radius: 7px;
+   padding: 1rem;
+   font-size: 1.4rem;
+   color: white;
+   font-size: 20px;
+ }
