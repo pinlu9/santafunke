@@ -3,33 +3,39 @@
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-
 
 <nav>
-  <ul>
-    <form class="firstform"
-          action ="<%= session_path %>"
-          method="POST"
-          autocomplete="false">
+  <% if !current_user %>
+    <ul>
+      <form class="firstform"
+            action ="<%= session_path %>"
+            method="POST"
+            autocomplete="false">
 
-    <li><input type="hidden"
-               name="authenticity_token"
-               value="<%= form_authenticity_token %>"></li>
+      <li><input type="hidden"
+                 name="authenticity_token"
+                 value="<%= form_authenticity_token %>"></li>
 
-    <li><input type="text"
-                   name ="user[email]"
-                   placeholder="Your email address"><li>
+      <li><input type="text"
+                     name ="user[email]"
+                     placeholder="Your email address"><li>
 
-    <li><input type="password"
-                   name="user[password]"
-                   placeholder="Password"><li/>
+      <li><input type="password"
+                     name="user[password]"
+                     placeholder="Password"><li/>
 
-    <li><button  class="btn waves-effect waves-light"
-                     input type ="submit"
-                      value="login">Log In</button><li>
+      <li><button  class="btn waves-effect waves-light"
+                       input type ="submit"
+                        value="login">Log In</button><li>
+      </form>
+    </ul>
+  <% else %>
+    <form action="<%= session_path %>" method="POST">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="_method" value="DELETE">
+      <button class="btn waves-effect waves-light" input type="submit" value="Log out!">Log out</button>
     </form>
-  </ul>
+  <% end %>
 </nav>
 
 <h1>Sign Up</h1>
@@ -103,12 +109,3 @@
            value="sign up">Sign Up
   </button>
 </form>
-
-<% if current_user %>
-<hr/>
-  <form action="<%= session_path %>" method="POST">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="submit" value="Log out!">
-  </form>
-<% end %>

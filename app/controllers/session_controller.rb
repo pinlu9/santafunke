@@ -5,11 +5,12 @@ class SessionController < ApplicationController
      if user && user.authenticate(user_params[:password])
        session[:current_user_id] = user.id
        flash[:message] = "Thank you for logging in"
+       redirect_to application_angular_path
      else
-      flash[:message] = "Email/Passowrd combo does not exist!"
-
+      flash[:message] = "Email/Password combo does not exist!"
+      redirect_to root_path
      end
-     redirect_to application_angular_path
+
   end
 
   def destroy

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :toys, defaults: { format: :json }
   resources :presents, defaults: { format: :json }
 
-  get '/session' => 'session#current_user'
+  get '/session' => 'session#current_user', defaults: { format: :json }
   post '/users' => 'users#create'
   post '/session' =>'session#create'
   delete '/session' => 'session#destroy'
