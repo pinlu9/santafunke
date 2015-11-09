@@ -4,6 +4,6 @@ json.toys(@toys) do |toy|
   json.name toy.name
   json.value toy.value
   json.description toy.description
-  json.json.created_at time_ago_in_words(toy.created_at) + " ago"
+  json.created_at time_ago_in_words(toy.created_at) + " ago"
 
 end

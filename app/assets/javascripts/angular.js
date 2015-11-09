@@ -47,30 +47,38 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
 */
 SantaFunke.controller('ToyController', ['$http', function($http){
   var controller = this;
-  var userType = headerCtrl.current_user.type;
   var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
   this.get_all_toys = function(){
+    // Mon 2:17 this works
     //hits toys#index which should return all the toys
     $http.get('/toys').then(function(data){
       // the get /toy should return a data object containing all the toys
-      controller.all_toys = data;
+      // console.log("These are all the toys");
+      console.log(data);
+      // console.log("End all toys");
+      // controller.all_toys = data;
     }, function(error){
       //what should we do with the errors?
     });
   };
   /* Call the function on instantiation */
+  // console.log("calling get_all_toys: ");
   this.get_all_toys();
 
    //hits presents#index which should return the toys that belong to the current user THROUGH presents
   this.get_presents = function(){
     $http.get('/presents').then(function(data){
-      controller.my_toys = data;
+      console.log("These are all MY Presents");
+      console.log(data);
+      console.log("End all MY Presents");
+      // controller.my_toys = data;
     }, function(error){
       //do what
     });
   };
   /* Call the function on instantiation */
+  console.log("calling get_presents: ");
   this.get_presents();
 
   this.createToy = function(){
