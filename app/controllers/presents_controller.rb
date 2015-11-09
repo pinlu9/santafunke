@@ -4,7 +4,7 @@ class PresentsController < ApplicationController
   # We delegate .presents to User in order to query efficiently
   def index
     # We know that User.toys correctly selects the toys through presents
-    @presents  = current_user.toys
+    @presents  = current_user.presents
   end
 
 end
