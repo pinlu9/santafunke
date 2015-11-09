@@ -4,6 +4,10 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def show
+    @users = [User.find_by_id(session[:current_user_id])]
+  end
+
   def create
     @user = User.new(user_params)
 
@@ -13,7 +17,7 @@ class UsersController < ApplicationController
         flash[:message] = @user.errors.full_messages.to_sentence
       end
 
-        redirect_to root_path
+        redirect_to application_angular_path
       end
 
       private
