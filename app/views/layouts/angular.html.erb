@@ -7,12 +7,27 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" charset="utf-8"></script>
 </head>
 <body>
+  <header>
+    <form action="<%= session_path %>" method="POST">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="_method" value="DELETE">
+      <button class="btn waves-effect waves-light" input type="submit" value="Log out!">Log out</button>
+    </form>
+  </header>
   <div class="session-div"
        ng-controller="SessionController as sessionCtrl">
        <!-- singular because it'll only ever handle the currently logged in user -->
     <h1>
-      Hello, {{sessionCtrl.current_user.email}}!
+      Hello, {{sessionCtrl.current_user.type}} {{sessionCtrl.current_user.name}}!
     </h1>
+    <h2>
+      <% if current_user.type === "Child" %>
+      You are {{sessionCtrl.current_user.age}} years old. You've grown so much in the past year!
+      <% end %>
+      <% if current_user.type === "Elf" %>
+      GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!
+      <% end %>
+    </h2>
   </div>
   <!--  yield  -->
   <%= javascript_include_tag 'angular', 'data-turbolinks-track' => true %>

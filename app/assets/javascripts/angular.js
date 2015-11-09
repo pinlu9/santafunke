@@ -8,9 +8,11 @@ SantaFunke.controller('SessionController', ['$http', function($http){
   var controller = this;
   $http.get('/session').then(function(data){
     // the get /session should return a data object that contains a current_user property
-    controller.current_user = data.current_user;
+    controller.current_user = data.data.current_user;
+    console.log("the current user is: ");
     console.log(controller.current_user);
   }, function(error){
+    console.log("you have an error: ", error);
     //what should we do with the errors?
   });
 }]);
