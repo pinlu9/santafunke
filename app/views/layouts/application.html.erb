@@ -7,8 +7,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <% if flash[:message] %>
+      <div class="alert">
+        <%= flash[:message] %>
+      </div>
+    <% end %>
+  <%= yield %>
 </body>
 </html>

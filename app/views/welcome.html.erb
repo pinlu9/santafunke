@@ -1,62 +1,74 @@
 
+<!-- sign up -->
 <h3>Please sign up</h3>
 
-    <form
-          action ="<%= users_path %>"
-          method="POST"
-          autocomplete="false">
+<form action ="<%= users_path %>"
+      method="POST"
+      autocomplete="false">
 
-      <input  type="hidden"
-              name="authenticity_token"
-              value="<%= form_authenticity_token %>">
+    <input type="hidden"
+           name="authenticity_token"
+           value="<%= form_authenticity_token %>">
+
+    <input type="text"
+           name ="user[name]"
+           placeholder="Name"><br/>
+
+    <input type="text"
+           name ="user[address]"
+           placeholder="Address"><br/>
+
+    <input type="text"
+           name ="user[age]"
+           placeholder="Age"><br/>
+
+    <input type="text"
+           name ="user[email]"
+           placeholder="Your email address"><br/>
+
+    <input type="password"
+           name="user[password_digest]"
+           placeholder="Password"><br/>
+
+    <input type="radio"
+           name="user[type]" checked>Child
+
+    <input type="radio"
+            name="user[type]">Elf<br/>
 
 
-      <input type="text"
-              name ="user[name]"
-             placeholder="Name"><br/>
-
-      <input type="text"
-             name ="user[address]"
-             placeholder="address"><br/>
-
-      <input type="text"
-              name ="user[age]"
-             placeholder="age"><br/>
-
-      <input type="text"
-              name ="user[email]"
-              placeholder="Your email address"><br/>
-
-      <input type="password"
-              name="user[password]"
-              placeholder="Password"><br/>
-      <input type ="submit"
-              value="sign up">
-    </form>
+    <input type ="submit"
+           value="sign up">
+</form>
 
 
 
 <!-- sign in -->
 
-
 <h3>Please sign in</h3>
 
-<form
-          action ="<%= users_path %>"
-          method="POST"
-          autocomplete="false">
+<form action ="<%= session_path %>"
+      method="POST"
+      autocomplete="false">
 
-      <input  type="text"
-              name="authenticity_token"
-              value="<%= form_authenticity_token %>">
+    <input type="text"
+           name="authenticity_token"
+           value="<%= form_authenticity_token %>">
 
-      <input type="text"
-              name ="user[email]"
-              placeholder="Your email address"><br/>
+    <input type="text"
+           name ="user[email]"
+           placeholder="Your email address"><br/>
 
-      <input type="password"
-              name="user[password]"
-              placeholder="Password"><br/>
-      <input type ="submit"
-              value="login">
+    <input type="password"
+           name="user[password_digest]"
+           placeholder="Password"><br/>
+
+    <input type="radio"
+           name="user[type]" checked>Child
+
+    <input type="radio"
+           name="user[type]">Elf<br/>
+
+    <input type ="submit"
+           value="login">
 </form>
