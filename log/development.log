@@ -48836,3 +48836,142 @@ Started GET "/" for ::1 at 2015-11-09 09:43:24 -0500
 Processing by ApplicationController#welcome as HTML
   Rendered welcome.html.erb within layouts/application (0.4ms)
 Completed 200 OK in 120ms (Views: 119.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-11-09 09:54:00 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ApplicationController#welcome as HTML
+  Rendered welcome.html.erb within layouts/application (22.2ms)
+Completed 500 Internal Server Error in 50ms (ActiveRecord: 0.0ms)
+
+ActionView::Template::Error (undefined local variable or method `current_user' for #<#<Class:0x007fea53218aa0>:0x007fea532137a8>):
+    104:   </button>
+    105: </form>
+    106: 
+    107: <% if current_user %>
+    108: <hr/>
+    109:   <form action="<%= session_path %>" method="POST">
+    110:     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  app/views/welcome.html.erb:107:in `_app_views_welcome_html_erb__3772816298531999480_70322196731060'
+  app/controllers/application_controller.rb:7:in `welcome'
+
+
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/actionpack-4.2.4/lib/action_dispatch/middleware/templates/rescues/_source.erb (16.9ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/actionpack-4.2.4/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (6.0ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/actionpack-4.2.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.3ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/actionpack-4.2.4/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (158.8ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.8ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.7ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (121.9ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.7ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.8ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (283.9ms)
+
+
+Started GET "/" for ::1 at 2015-11-09 09:57:33 -0500
+Processing by ApplicationController#welcome as HTML
+  [1m[35mUser Load (0.8ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 4]]
+  Rendered welcome.html.erb within layouts/application (74.4ms)
+Completed 200 OK in 389ms (Views: 380.4ms | ActiveRecord: 7.9ms)
+
+
+Started GET "/assets/presents.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/toys.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/application.self-0b1fff4cf337be12f064f0d2602e74a988cfdfb2a29ce3369385b7df4e202378.css?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/session.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/jquery.self-a714331225dda820228db323939889f149aec0127aeb06255646b616ba1ca419.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/judgments.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/jquery_ujs.self-d456baa54c1fa6be2ec3711f0a72ddf7a5b2f34a6b4f515f33767d6207b7d4b3.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/angular.self-aa842dc2389de6c8bc7cc7fa98192e3f2d2b48f168e857148479d90ca2a07a07.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/judgments.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/presents.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/session.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/toys.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2015-11-09 09:57:33 -0500
+
+
+Started POST "/session" for ::1 at 2015-11-09 09:57:44 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"authenticity_token"=>"m7j4dx74rLMT7Fc3EcqQ6sBWCmV/v57brLWgJ7XeKcs4QZtPif6wr9lPRXlrfv8gJWih0l0muwg4ZIsImFv9kw==", "user"=>{"email"=>"pin@ga.co", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1[0m  [["email", "pin@ga.co"]]
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 0.5ms)
+
+BCrypt::Errors::InvalidHash (invalid hash):
+  app/controllers/session_controller.rb:5:in `create'
+
+
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/actionpack-4.2.4/lib/action_dispatch/middleware/templates/rescues/_source.erb (10.1ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/actionpack-4.2.4/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.5ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/actionpack-4.2.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/actionpack-4.2.4/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (125.3ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (104.7ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.7ms)
+  Rendered /Users/kevinwalter/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (238.3ms)
+
+
+Started POST "/session" for ::1 at 2015-11-09 09:57:57 -0500
+Processing by SessionController#create as HTML
+  Parameters: {"authenticity_token"=>"m7j4dx74rLMT7Fc3EcqQ6sBWCmV/v57brLWgJ7XeKcs4QZtPif6wr9lPRXlrfv8gJWih0l0muwg4ZIsImFv9kw==", "user"=>{"email"=>"andy@ga.co", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1  [["email", "andy@ga.co"]]
+Redirected to http://localhost:3000/
+Completed 302 Found in 91ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/" for ::1 at 2015-11-09 09:57:57 -0500
+Processing by ApplicationController#welcome as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 4]]
+  Rendered welcome.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 82ms (Views: 80.5ms | ActiveRecord: 0.5ms)
+
+
+Started DELETE "/session" for ::1 at 2015-11-09 09:58:00 -0500
+Processing by SessionController#destroy as HTML
+  Parameters: {"authenticity_token"=>"TujPsH6TrGOC5olgXVQrlgJaeXCXRPSQh3L1r0P6k5btEayI6ZWwf0hFmy4n4ERc52TSx7Xd0UMTo96Abn9Hzg=="}
+Redirected to http://localhost:3000/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-11-09 09:58:00 -0500
+Processing by ApplicationController#welcome as HTML
+  Rendered welcome.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 81ms (Views: 80.7ms | ActiveRecord: 0.0ms)
