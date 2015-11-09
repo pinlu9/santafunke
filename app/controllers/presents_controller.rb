@@ -17,4 +17,26 @@ class PresentsController < ApplicationController
       #first part in JSON, second part is ActRec Association
   end
 
+  def create
+    @present = Present.new(present_info)
+
+    if @present.save
+
+    else
+      render json: {
+        error: {
+          message: @present.errors.full_messages.to_sentence
+        }
+      }
+    end
+  end
+
+  private
+
+  def present_info
+    return params.require(:present)
+            .permit(:child_id, :toy_id, :elf_id)
+  end
+
+
 end

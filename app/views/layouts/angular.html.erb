@@ -14,7 +14,7 @@
       <button class="btn waves-effect waves-light" input type="submit" value="Log out!">Log out</button>
     </form>
   </header>
-  <div class="session-div"
+  <div id="session-div"
        ng-controller="SessionController as sessionCtrl">
        <!-- singular because it'll only ever handle the currently logged in user -->
     <h1>
@@ -34,7 +34,7 @@
   <!-- Please note, the code for this is predicated on current_user being a Child -->
     <!-- The use of "wishlistCtrl" is an attempt to be semantic, we want to use this model as the portal to all wishlist stuff
          Toy creation, toy reading, present creation, toy editing FB/KW -->
-    <div id="wishlist" ng-controller="ToyController as wishlistCtrl">
+    <div class="wishlist" ng-controller="ToyController as wishlistCtrl">
       <!-- my_toys -->
       <div ng-repeat="present in wishlistCtrl.my_toys" class="present">
         <!-- 'GET' /presents must return current_user's -->
@@ -51,7 +51,19 @@
             <div class="present_elf">
               name: {{present.elf.name}}
             </div>
-        <!-- $index -->
+      </div>
+      <!-- end presents list -->
+      <div id="create-present">
+        <form ng-submit="wishlistCtrl.createPresent()">
+          <input type="hidden" ng-model="wishlistCtrl.current_user" value="{{current_user.id}}">
+          <select ng-model="wishlistCtrl.toyID">
+            <option ng-repeat="toy in wishlistCtrl.all_toys"
+            value = toy.id>
+            {{toy.name}}</option>
+          </select>
+          <input type="submit" value="submit present" />
+        </form>
+        <!-- present creation form -->
       </div>
     </div>
 

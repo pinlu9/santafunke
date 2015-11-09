@@ -55,9 +55,10 @@ SantaFunke.controller('ToyController', ['$http', function($http){
     $http.get('/toys').then(function(data){
       // the get /toy should return a data object containing all the toys
       // console.log("These are all the toys");
-      console.log(data);
+      // console.log(data);
       // console.log("End all toys");
-      // controller.all_toys = data;
+      controller.all_toys = data.data.toys;
+      console.log(data.data.toys);
     }, function(error){
       //what should we do with the errors?
     });
@@ -69,9 +70,6 @@ SantaFunke.controller('ToyController', ['$http', function($http){
    //hits presents#index which should return the toys that belong to the current user THROUGH presents
   this.get_presents = function(){
     $http.get('/presents').then(function(data){
-      console.log("These are all MY Presents");
-      console.log(data);
-      console.log("End all MY Presents");
       controller.my_toys = data.data.presents;
       // data.data.presents[index].child / toy / elf
     }, function(error){
@@ -79,9 +77,10 @@ SantaFunke.controller('ToyController', ['$http', function($http){
     });
   };
   /* Call the function on instantiation */
-  console.log("calling get_presents: ");
   this.get_presents();
 
+
+  // NOT HERE YET
   this.createToy = function(){
     // temporarily add to the list until the AJAX query completes
     controller.my_toys.push({
@@ -104,6 +103,25 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       controller.my_toys.pop();
       controller.my_toys.push(data.toy); //what does this look like?
       controller.get_presents(); //wtFrig?
+    },function(error){
+      // do what
+    });
+  };
+
+  //WORKING ON THIS
+  this.createPresent = function(){
+    //make a post to /presents
+    $http.post('/presents', {
+      //include authenticity_token
+      authenticity_token: authenticity_token,
+      //values from form
+      present: {
+        child_id: this.current_user,
+        // elf_id: this.newToyValue, non-extant in child version, elf id is only ever set in update
+        toy_id: this.toyID //whatever we want, ties to form
+      }
+    }).then(function(data){
+      controller.get_presents();
     },function(error){
       // do what
     });
