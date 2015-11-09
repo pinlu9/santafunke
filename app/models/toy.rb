@@ -1,4 +1,5 @@
 class Toy < ActiveRecord::Base
+  has_many :presents 
 end
 
 # Toys are entries in a "Toy Catalogue", kind of an archetypal toy

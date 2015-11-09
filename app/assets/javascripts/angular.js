@@ -72,7 +72,8 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       console.log("These are all MY Presents");
       console.log(data);
       console.log("End all MY Presents");
-      // controller.my_toys = data;
+      controller.my_toys = data.data.presents;
+      // data.data.presents[index].child / toy / elf
     }, function(error){
       //do what
     });

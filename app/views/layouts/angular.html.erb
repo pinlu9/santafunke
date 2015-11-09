@@ -36,9 +36,24 @@
          Toy creation, toy reading, present creation, toy editing FB/KW -->
     <div id="wishlist" ng-controller="ToyController as wishlistCtrl">
       <!-- my_toys -->
-      <div ng-repeat="toy in wishlistCtrl.my_toys" class="present">
+      <div ng-repeat="present in wishlistCtrl.my_toys" class="present">
         <!-- 'GET' /presents must return current_user's -->
+        <h1>This is a present!</h1>
+          <div class="present_toy">
+            name: {{present.toy.name}}
+            value: {{present.toy.value}}
+            descript: {{present.toy.description}}
+          </div>
+          <!-- We dont need more info for the child view -->
+            <div class="present_child">
+              name: {{present.child.name}}
+            </div>
+            <div class="present_elf">
+              name: {{present.elf.name}}
+            </div>
+        <!-- $index -->
       </div>
+    </div>
 
       <!-- all_toys -->
 
