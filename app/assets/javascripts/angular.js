@@ -116,9 +116,11 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       authenticity_token: authenticity_token,
       //values from form
       present: {
-        child_id: this.current_user,
+        // must add display values
+        //How to get the right child id?
+        child_id: null,
         // elf_id: this.newToyValue, non-extant in child version, elf id is only ever set in update
-        toy_id: this.toyID //whatever we want, ties to form
+        toy_id: controller.toyID //whatever we want, ties to form
       }
     }).then(function(data){
       controller.get_presents();

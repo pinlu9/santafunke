@@ -55,10 +55,10 @@
       <!-- end presents list -->
       <div id="create-present">
         <form ng-submit="wishlistCtrl.createPresent()">
-          <input type="hidden" ng-model="wishlistCtrl.current_user" value="{{current_user.id}}">
+          <input type="hidden" ng-model="wishlistCtrl.current_user_id" value="<%=current_user.id%>">
           <select ng-model="wishlistCtrl.toyID">
             <option ng-repeat="toy in wishlistCtrl.all_toys"
-            value = toy.id>
+              value="{{ toy.id }}">
             {{toy.name}}</option>
           </select>
           <input type="submit" value="submit present" />
