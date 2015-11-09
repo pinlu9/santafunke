@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root 'application#welcome'
 
+  get 'application/angular'
 
   # this is temporary for now. We will have to use `only`/`except` to ensure that we have correct default formats for different paths
   resources :users, defaults: { format: :json }

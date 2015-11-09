@@ -1,20 +1,20 @@
 var SantaFunke = angular.module('SantaFunke', []);
 //ng-route - publishes to the address bar
 
-/* START Header Controller
-Lets have a header controller so that we can change the styling based on who is logged in
+/* START Session Controller
+Lets have a session controller so that we can change the styling based on who is logged in
 We can, later, use current_user.type to define which css we link! */
-SantaFunke.controller('HeaderController', ['$http', function($http){
+SantaFunke.controller('SessionController', ['$http', function($http){
   var controller = this;
   $http.get('/session').then(function(data){
     // the get /session should return a data object that contains a current_user property
     controller.current_user = data.current_user;
+    console.log(controller.current_user);
   }, function(error){
     //what should we do with the errors?
   });
-
 }]);
-/* End HeaderController */
+/* End SessionController */
 
 
 
@@ -23,10 +23,10 @@ SantaFunke.controller('HeaderController', ['$http', function($http){
 /* START User Controller
 We need to create a flexible controller for Elves and Children
 They're both users, so they share certain data points, but they have different functionality? */
-SantaFunke.controller('UserController', ['$http', function($http){
+SantaFunke.controller('ChildrenController', ['$http', function($http){
   var controller = this;
-  $http.get('/user').then(function(data){
-    // the get /user should return a data object containing the user's information
+  $http.get('/users').then(function(data){
+    // the get /users should return a data object containing all of the children
   }, function(error){
     //what should we do with the errors?
   });
