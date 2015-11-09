@@ -1,62 +1,102 @@
+<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
 
-<h3>Please sign up</h3>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 
-    <form
-          action ="<%= users_path %>"
+
+<nav>
+  <ul>
+    <form class="firstform"
+          action ="<%= session_path %>"
           method="POST"
           autocomplete="false">
 
-      <input  type="hidden"
-              name="authenticity_token"
-              value="<%= form_authenticity_token %>">
+    <li><input type="hidden"
+               name="authenticity_token"
+               value="<%= form_authenticity_token %>"></li>
 
+    <li><input type="text"
+                   name ="user[email]"
+                   placeholder="Your email address"><li>
 
-      <input type="text"
-              name ="user[name]"
-             placeholder="Name"><br/>
+    <li><input type="password"
+                   name="user[password_digest]"
+                   placeholder="Password"><li/>
 
-      <input type="text"
-             name ="user[address]"
-             placeholder="address"><br/>
-
-      <input type="text"
-              name ="user[age]"
-             placeholder="age"><br/>
-
-      <input type="text"
-              name ="user[email]"
-              placeholder="Your email address"><br/>
-
-      <input type="password"
-              name="user[password]"
-              placeholder="Password"><br/>
-      <input type ="submit"
-              value="sign up">
+    <li><button  class="btn waves-effect waves-light"
+                     input type ="submit"
+                      value="login">Log In</button><li>
     </form>
+  </ul>
+</nav>
+
+<h1>Sign Up</h1>
+
+<form class="secondform"
+      action ="<%= users_path %>"
+      method="POST"
+      autocomplete="false">
+
+    <input type="hidden"
+           name="authenticity_token"
+           value="<%= form_authenticity_token %>">
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="text"
+               name ="user[name]"
+               placeholder="">
+           <label for="Address">Name</label>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="text"
+               name ="user[address]"
+               placeholder="">
+        <label for="Address">Address</label>
+    </div>
+
+   <div class="row">
+      <div class="input-field col s12">
+        <input type="text"
+               name ="user[age]"
+               placeholder=""><br/>
+        <label for="age">Age</label>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="text"
+               name ="user[email]"
+               placeholder="">
+          <label for="email">Your email address</label>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="password"
+               name="user[password_digest]"
+               placeholder="">
+           <label for="password">Password</label>
+      </div>
+    <center>
+    <input type="radio"
+           id="test1"
+           name="user[type]" checked>
+           <label for="test1">Child</label>
+
+    <input type="radio"
+           id="test2"
+           name="user[type]">
+           <label for="test2">Elf</label><center>
+           <br/>
 
 
-
-<!-- sign in -->
-
-
-<h3>Please sign in</h3>
-
-<form
-          action ="<%= users_path %>"
-          method="POST"
-          autocomplete="false">
-
-      <input  type="text"
-              name="authenticity_token"
-              value="<%= form_authenticity_token %>">
-
-      <input type="text"
-              name ="user[email]"
-              placeholder="Your email address"><br/>
-
-      <input type="password"
-              name="user[password]"
-              placeholder="Password"><br/>
-      <input type ="submit"
-              value="login">
+  <button  class="btn waves-effect waves-light"
+           type ="submit"
+           value="sign up">Sign Up
+  </button>
 </form>
