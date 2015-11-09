@@ -1,10 +1,16 @@
 class User < ActiveRecord::Base
 
+  has_secure_password
+
   validates :email, presence: true, uniqueness: true
   validates :password_digest, length: { minimum: 8, allow_nil: true}
   has_many :presents
   has_many :judgments
   has_many :toys, through: :presents
+
+  def self.types
+    %w(Child Elf)
+  end
 
 end
 
