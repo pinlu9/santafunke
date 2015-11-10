@@ -82,7 +82,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 
   this.createToy = function(){
     // temporarily add to the list until the AJAX query completes
-    // do we even want to do this? Kind of flashes before the data saves to the db and the name of the toy is permanently added to the dropdown list.. 
+    // do we even want to do this? Kind of flashes before the data saves to the db and the name of the toy is permanently added to the dropdown list..
     console.log("testing in the createToy function!");
     controller.all_toys.push({
       name: controller.newToyName + "...loading",
@@ -134,6 +134,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 
 
 }]);
+
 /* End Toy Controller */
 
 
@@ -171,3 +172,36 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 // }]);
 
 /* END Presents Controller */
+
+
+// countdown
+var end = new Date('12/25/2015');
+
+var _second = 1000;
+var _minute = _second * 60;
+var _hour = _minute * 60;
+var _day = _hour * 24;
+var timer;
+
+  function showRemaining() {
+      var now = new Date();
+      var distance = end - now;
+      if (distance < 0) {
+
+          clearInterval(timer);
+          document.getElementById('countdown').innerHTML = 'EXPIRED!';
+
+          return;
+      }
+      var days = Math.floor(distance / _day);
+      var hours = Math.floor((distance % _day) / _hour);
+      var minutes = Math.floor((distance % _hour) / _minute);
+      var seconds = Math.floor((distance % _minute) / _second);
+
+  document.getElementById('countdown').innerHTML = days + 'days ';
+      document.getElementById('countdown').innerHTML += hours + 'hrs ';
+      document.getElementById('countdown').innerHTML += minutes + 'mins ';
+      document.getElementById('countdown').innerHTML += seconds + 'secs';
+  }
+
+  timer = setInterval(showRemaining, 1000);

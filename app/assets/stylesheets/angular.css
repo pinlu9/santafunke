@@ -1,0 +1,55 @@
+/*.logoutsecond {
+  float: right;
+}*/
+
+h1 {
+  text-align: center;
+}
+
+.namelogo{
+  margin: -27px;
+  float: left;
+}
+
+.background2 {
+  background-color: #2bbbad;
+  color: white;
+}
+
+.secondlogout {
+   float: right;
+   margin-right: 50px;
+ }
+
+.session-div, .box{
+   margin-left: 50px;
+   text-decoration: none;
+   list-style: none;
+ }
+
+.alltab{
+ margin-left: 50px;
+}
+
+.form3 {
+
+  width: 50%;
+}
+
+.highlight{
+  width: 50%
+}
+
+marquee {
+  position: absolute;
+}
+
+#countdown{
+  position: absolute;
+  margin-left: 50px;
+  width: 20%;
+
+
+.highlight{
+  width: 50%;
+}

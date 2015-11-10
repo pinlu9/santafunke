@@ -4,33 +4,98 @@
   <title>SantaFunke</title>
   <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" charset="utf-8"></script>
+  <!-- adding below CSS framework-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
 </head>
-<body>
-  <header>
-    <form action="<%= session_path %>" method="POST">
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <input type="hidden" name="_method" value="DELETE">
-      <button class="btn waves-effect waves-light" input type="submit" value="Log out!">Log out</button>
-    </form>
-  </header>
+
+  <body>
+
+
+
+    <% if current_user.type === "Child" %>
+    <nav>
+        <div id="countdown"></div>
+         <div class="nav-wrapper">
+           <form class="secondlogout"
+                 action="<%= session_path %>"
+                 method="POST">
+             <input type="hidden"
+                    name="authenticity_token"
+                    value="<%= form_authenticity_token %>">
+             <input type="hidden"
+                    name="_method"
+                    value="DELETE">
+             <button class="btn waves-effect waves-light"
+                     type="submit"
+                     value="Log out!">Log out</button>
+           </form>
+
+         </div>
+    </nav>
+    <br>
+    <br>
+
+
+    <% end %>
+
+    <% if current_user.type === "Elf" %>
+      <nav>
+
+           <div class="nav-wrapper teal lighten-1">
+             <form class="secondlogout"
+                   action="<%= session_path %>"
+                   method="POST">
+               <input type="hidden"
+                      name="authenticity_token"
+                      value="<%= form_authenticity_token %>">
+               <input type="hidden"
+                      name="_method"
+                      value="DELETE">
+               <button class="btn waves-effect red lighten-1"
+                       type="submit"
+                       value="Log out!">Log out</button>
+             </form>
+           </div>
+      </nav>
+
+
+    <% end %>
+
   <div id="session-div"
        ng-controller="SessionController as sessionCtrl">
        <!-- singular because it'll only ever handle the currently logged in user -->
     <h1>
       Hello, {{sessionCtrl.current_user.type}} {{sessionCtrl.current_user.name}}!
+      <br>
+      <marquee  width=400 height=100><img src="http://mybirdie.ca/files/how-santa-got-his-reindeer.gif" height="100px"></marquee>
+      <img src="http://i.giphy.com/A27PZDSLuK6ys.gif" width= "35%">
+
     </h1>
-    <h2>
+    <h4>
       <% if current_user.type === "Child" %>
       You are {{sessionCtrl.current_user.age}} years old. You've grown so much in the past year!
+
       <% end %>
       <% if current_user.type === "Elf" %>
       GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!
       <% end %>
-    </h2>
+    </h4>
+    <br>
+
+
+<div class="alltab"
+
 
   <!-- Start wishlist "partial" -->
   <% if current_user.type === "Child" %>
+
+
+
+  <img src="http://1.bp.blogspot.com/-dZWOzEoZHs0/UDILL8QE-hI/AAAAAAAACog/o1V4u2WwFk0/s1600/SMART+BOY+FB.jpg" height="100">
   <!-- Please note, the code for this is predicated on current_user being a Child -->
     <!-- The use of "wishlistCtrl" is an attempt to be semantic, we want to use this model as the portal to all wishlist stuff
          Toy creation, toy reading, present creation, toy editing FB/KW -->
@@ -38,27 +103,68 @@
       <!-- my_toys -->
       <div ng-repeat="present in wishlistCtrl.my_toys" class="present">
         <!-- 'GET' /presents must return current_user's -->
-        <h1>This is a present!</h1>
+        <h5>This is a present!</h5>
           <div class="present_toy">
-            name: {{present.toy.name}}
+
+            <table class="highlight">
+      <thead>
+        <tr>
+            <th data-field="id">Name</th>
+            <th data-field="name">Value</th>
+            <th data-field="price">Description</th>
+
+        <tbody>
+          <tr>
+            <td>{{present.toy.name}}</td>
+            <td>{{present.toy.value}}</td>
+            <td>{{present.toy.description}}</td>
+          </tr>
+
+          <tr>
+            <td>{{present.toy.name}}</td>
+            <td>{{present.toy.value}}</td>
+            <td>{{present.toy.description}}</td>
+          </tr>
+          <tr>
+            <td>{{present.toy.name}}</td>
+            <td>{{present.toy.value}}</td>
+            <td>{{present.toy.description}}</td>
+          </tr>
+          <tr>
+            <td>{{present.toy.name}}</td>
+            <td>{{present.toy.value}}</td>
+            <td>{{present.toy.description}}</td>
+          </tr>
+          <tr>
+            <td>{{present.toy.name}}</td>
+            <td>{{present.toy.value}}</td>
+            <td>{{present.toy.description}}</td>
+          </tr>
+        </tr>
+      </thead>
+    </table>
+
+            <!-- name: {{present.toy.name}}
             value: {{present.toy.value}}
-            descript: {{present.toy.description}}
+            descript: {{present.toy.description}} -->
           </div>
           <!-- We dont need more info for the child view -->
-            <div class="present_child">
+            <!-- <div class="present_child">
               child name: {{present.child.name}}
             </div>
             <div class="present_elf">
               elf name: {{present.elf.name}}
-            </div>
+            </div> -->
       </div>
       <!-- end presents list -->
+
+
       <div id="create-present">
 
         <!-- got this to work by nesting the ToyController within the SessionController -->
 
-        <!-- <h1 style="color: blue">current user id is: {{ sessionCtrl.current_user.id }}</h1> -->
-        <h2>Choose a present from the list!</h2>
+        <!-- <h1 style="color: blue">current user id is: {{ sessionCtrl.current_user.id }}</h1>
+        <h5>Choose a present from the list!</h5> -->
         <form ng-submit="wishlistCtrl.createPresent()">
           <!-- couldn't get this working.. came up with solution in angular.js instead -->
           <!-- <input type="hidden" name="wishlistCtrl.current_user_id" value="{{ sessionCtrl.current_user.id }}"> -->
@@ -67,7 +173,7 @@
               value="{{ toy.id }}">
             {{toy.name}}</option>
           </select>
-          <input type="submit" value="submit present" />
+          <input class="" type="submit" value="submit present" />
         </form>
         <!-- present creation form -->
       </div>
@@ -76,18 +182,29 @@
 
 
     <!-- createToy start -->
-    <h2>Create your Toy!</h2>
-     <form ng-submit="wishlistCtrl.createToy()">
+    <h5>Create your Toy!</h5>
+
+     <form class= "form3"
+           ng-submit="wishlistCtrl.createToy()">
        <input type="text" ng-model="wishlistCtrl.newToyName" placeholder="toy name"/>
        <input type="number" ng-model="wishlistCtrl.newToyValue" placeholder="toy value"/>
        <input type="text" ng-model="wishlistCtrl.newToyDescription" placeholder="toy description"/>
-       <input type="submit" value="submit toy" />
+       <input  type="submit" value="submit toy" />
      </form>
+
      <!-- createToy end -->
     </div>
 
   </div>
+
 <% end %>
+
+
+</div>
+
+
+
+
   <!-- End wishlist "partial" -->
 
   <!--  yield  -->
