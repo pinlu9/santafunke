@@ -57,8 +57,8 @@
 
         <!-- got this to work by nesting the ToyController within the SessionController -->
 
-        <h1 style="color: blue">current user id is: {{ sessionCtrl.current_user.id }}</h1>
-        <h2>Create a new present!</h2>
+        <!-- <h1 style="color: blue">current user id is: {{ sessionCtrl.current_user.id }}</h1> -->
+        <h2>Choose a present from the list!</h2>
         <form ng-submit="wishlistCtrl.createPresent()">
           <!-- couldn't get this working.. came up with solution in angular.js instead -->
           <!-- <input type="hidden" name="wishlistCtrl.current_user_id" value="{{ sessionCtrl.current_user.id }}"> -->
@@ -71,23 +71,23 @@
         </form>
         <!-- present creation form -->
       </div>
-    </div>
 
       <!-- all_toys -->
 
 
-      <!-- createToy start -->
-      <h2>Create your Toy!</h2>
-       <form ng-submit="toyCtrl.createToy()">
-         <input type="text" ng-model="toyCtrl.newToyName" placeholder="toy name"/>
-         <input type="text" ng-model="toyCtrl.newToyDescription" placeholder="toy description"/>
-         <input type="submit" value="submit toy" />
-       </form>
-       <!-- createToy end -->
-
-
+    <!-- createToy start -->
+    <h2>Create your Toy!</h2>
+     <form ng-submit="wishlistCtrl.createToy()">
+       <input type="text" ng-model="wishlistCtrl.newToyName" placeholder="toy name"/>
+       <input type="number" ng-model="wishlistCtrl.newToyValue" placeholder="toy value"/>
+       <input type="text" ng-model="wishlistCtrl.newToyDescription" placeholder="toy description"/>
+       <input type="submit" value="submit toy" />
+     </form>
+     <!-- createToy end -->
     </div>
-  <% end %>
+
+  </div>
+<% end %>
   <!-- End wishlist "partial" -->
 
   <!--  yield  -->
