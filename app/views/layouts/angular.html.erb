@@ -46,11 +46,14 @@
       <!-- start judgment "partial" -->
       <div class="judgment_day">
         <div class="judgment" ng-repeat="judgment in child.judgments">
+          {{child.name}} did this: {{judgment.description}}
           <!-- come back and insert elf name, description, naughty/nice, edit button -->
-        </div>
-      </div>
-    </div>
-  </div>
+        </div> <!-- closes list of judgments -->
+        <!-- Create a new judgment -->
+        testing in judgment creation thingy
+      </div> <!-- closes JUDGMENT DAY -->
+    </div> <!-- closes the ng-repeat per child -->
+  </div> <!-- closes the ChildrenController -->
 <% end %>
 
   <!-- Start wishlist "partial" -->
