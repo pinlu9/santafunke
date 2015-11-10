@@ -21,7 +21,7 @@ class PresentsController < ApplicationController
     @present = Present.new(present_info)
 
     if @present.save
-
+      render json: @present
     else
       render json: {
         error: {
@@ -29,6 +29,9 @@ class PresentsController < ApplicationController
         }
       }
     end
+  end
+
+  def show
   end
 
   private
