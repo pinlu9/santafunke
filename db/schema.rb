@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109143049) do
+ActiveRecord::Schema.define(version: 20151110171422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,8 +19,11 @@ ActiveRecord::Schema.define(version: 20151109143049) do
   create_table "judgments", force: :cascade do |t|
     t.integer  "child_id"
     t.integer  "elf_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "description"
+    t.boolean  "naughty",           default: true
+    t.string   "qualifying_adverb"
   end
 
   create_table "presents", force: :cascade do |t|
