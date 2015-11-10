@@ -26,9 +26,9 @@ SantaFunke.controller('SessionController', ['$http', function($http){
 
 
 
-/* START User Controller
-We need to create a flexible controller for Elves and Children
-They're both users, so they share certain data points, but they have different functionality? */
+/* START Children Controller
+This one's just for the kids */
+
 SantaFunke.controller('ChildrenController', ['$http', function($http){
   var controller = this;
   $http.get('/users/children').then(function(data){
@@ -73,7 +73,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
   this.get_all_toys();
 
    //hits presents#index which should return the toys that belong to the current user THROUGH presents
-  this.get_presents = function(){
+  this.get_my_presents = function(){
     $http.get('/presents').then(function(data){
       controller.my_toys = data.data.presents;
       // data.data.presents[index].child / toy / elf
@@ -82,7 +82,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
     });
   };
   /* Call the function on instantiation */
-  this.get_presents();
+  this.get_my_presents();
 
   this.createToy = function(){
     // temporarily add to the list until the AJAX query completes
@@ -133,7 +133,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       }
     }).then(function(data){
       // console.log("present is: ", present);
-      controller.get_presents();
+      controller.get_my_presents();
     },function(error){
       // do what
     });
@@ -149,8 +149,36 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 
 
 
-/* START Judgement Controller
+/* START Judgment Controller
 */
+// we'll call this function through the judgment controller
+// judgement controller is our portal to display viewed children’s wishlist, edit the wishlist by attaching/removing self (elf_id), create judgements
+
+SantaFunke.controller('JudgmentController', ['$http', function($http){
+  var controller = this;
+  $http.get('/judgments').then(function(data){
+    // the get /users should return a data object containing all of the children
+    controller.judgments = data.data.judgments
+    console.log(data);
+  }, function(error){
+    //what should we do with the errors?
+  });
+
+  //hits presents#index which should return the toys that belong to the current user THROUGH presents
+  this.get_presents = function(){
+   $http.get('/presents').then(function(data){
+     controller.my_toys = data.data.presents;
+     // data.data.presents[index].child / toy / elf
+   }, function(error){
+     //do what
+   });
+  };
+  /* Call the function on instantiation */
+  this.get_presents();
+
+}]);
+
+
 
 /* End Judgement Controller */
 
