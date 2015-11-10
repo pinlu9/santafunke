@@ -17,7 +17,7 @@ class UsersController < ApplicationController
         flash[:message] = @user.errors.full_messages.to_sentence
       end
 
-        redirect_to application_angular_path
+        redirect_to root_path
       end
 
       private
