@@ -82,7 +82,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 
   this.createToy = function(){
     // temporarily add to the list until the AJAX query completes
-    // do we even want to do this? Kind of flashes before the data saves to the db and the name of the toy is permanently added to the dropdown list.. 
+    // do we even want to do this? Kind of flashes before the data saves to the db and the name of the toy is permanently added to the dropdown list..
     console.log("testing in the createToy function!");
     controller.all_toys.push({
       name: controller.newToyName + "...loading",
@@ -105,6 +105,9 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       controller.all_toys.pop();
       controller.all_toys.push(data.data); //what does this look like?
       // controller.get_presents(); //wtFrig?
+      controller.newToyName = "";
+      controller.newToyValue = "";
+      controller.newToyDescription = "";
     },function(error){
       // do what
     });
