@@ -33,7 +33,7 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
   var controller = this;
   $http.get('/users/children').then(function(data){
     // the get /users should return a data object containing all of the children
-    controller.children = data.data.children
+    controller.children = data.data.children;
     console.log(data);
   }, function(error){
     //what should we do with the errors?
@@ -154,27 +154,28 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 // we'll call this function through the judgment controller
 // judgement controller is our portal to display viewed children’s wishlist, edit the wishlist by attaching/removing self (elf_id), create judgements
 
+// This exists purely for creating judgments
 SantaFunke.controller('JudgmentController', ['$http', function($http){
   var controller = this;
-  $http.get('/judgments').then(function(data){
-    // the get /users should return a data object containing all of the children
-    controller.judgments = data.data.judgments
-    console.log(data);
-  }, function(error){
-    //what should we do with the errors?
-  });
 
-  //hits presents#index which should return the toys that belong to the current user THROUGH presents
-  this.get_presents = function(){
-   $http.get('/presents').then(function(data){
-     controller.my_toys = data.data.presents;
-     // data.data.presents[index].child / toy / elf
-   }, function(error){
-     //do what
-   });
+  controller.createJudgment = function(){
+    $http.post('/judgments', {
+      //include authenticity_token
+      authenticity_token: authenticity_token,
+      //values from form
+      judgment: {
+        elf_name: controller.elfName,
+        description: controller.description
+        //naughty: controller.naughty is default true for now
+      }
+    }).then(function(data){
+      // console.log("present is: ", present);
+      // find a way to push this into the displayed array of judgments in the parent
+    },function(error){
+      // do what
+    });
   };
-  /* Call the function on instantiation */
-  this.get_presents();
+
 
 }]);
 

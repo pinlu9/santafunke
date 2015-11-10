@@ -4,4 +4,12 @@ class JudgmentsController < ApplicationController
     @judgments = Judgment.all
   end
 
+  def create
+    
+
+  end
+
+
+
+
 end
