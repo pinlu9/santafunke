@@ -1,0 +1,53 @@
+/*.logoutsecond {
+  float: right;
+}*/
+
+h1 {
+  text-align: center;
+}
+
+.namelogo{
+  margin: -27px;
+  float: left;
+}
+
+.background2 {
+  background-color: #2bbbad;
+  color: white;
+}
+
+.secondlogout {
+   float: right;
+   margin-right: 50px;
+ }
+
+.session-div, .box{
+   margin-left: 50px;
+   text-decoration: none;
+   list-style: none;
+ }
+
+.alltab{
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.form3 {
+
+  width: 50%;
+}
+
+.highlight{
+  width: 50%
+  /* this is set to fifty percent so we can put a map next to the presents */
+}
+
+marquee {
+  position: absolute;
+}
+
+#countdown{
+  position: absolute;
+  margin-left: 50px;
+  width: 20%;
+}
