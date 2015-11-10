@@ -4,6 +4,11 @@ Rails.application.routes.draw do
 
   get 'application/angular'
 
+  get '/users/children' => 'users#children_index', defaults: { format: :json }
+  get '/users/elves' => 'users#elves_index', defaults: { format: :json }
+
+  get '/presents/mine' => 'presents#mine', defaults: { format: :json }
+
   # this is temporary for now. We will have to use `only`/`except` to ensure that we have correct default formats for different paths
   resources :users, defaults: { format: :json }
   resources :judgments, defaults: { format: :json }
@@ -14,7 +19,6 @@ Rails.application.routes.draw do
   post '/users' => 'users#create'
   post '/session' =>'session#create'
   delete '/session' => 'session#destroy'
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

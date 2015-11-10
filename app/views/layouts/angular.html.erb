@@ -29,6 +29,33 @@
       <% end %>
     </h2>
 
+
+  <!-- Start naughty/nice elf "partial" -->
+<% if current_user.type === "Elf" %>
+  <!-- Instantiate the list of children using the ChildrenController -->
+  <div id="naughty-nice" ng-controller="ChildrenController as naughtyNiceCtrl">
+    <div class="child" ng-repeat="child in naughtyNiceCtrl.children">
+      <!-- entirety of the child view. click to expand the child's wishlist. -->
+      <h1>{{child.name}}</h1></br>
+      <div class="wishlist">
+        <div class="present" ng-repeat="present in child.presents">
+          toy name: {{present.toy.name}}
+          worked on by: {{present.elf.name}}
+        </div>
+      </div>
+      <!-- start judgment "partial" -->
+      <div class="judgment_day">
+        <div class="judgment" ng-repeat="judgment in child.judgments">
+          {{child.name}} did this: {{judgment.description}}
+          <!-- come back and insert elf name, description, naughty/nice, edit button -->
+        </div> <!-- closes list of judgments -->
+        <!-- Create a new judgment -->
+        testing in judgment creation thingy
+      </div> <!-- closes JUDGMENT DAY -->
+    </div> <!-- closes the ng-repeat per child -->
+  </div> <!-- closes the ChildrenController -->
+<% end %>
+
   <!-- Start wishlist "partial" -->
   <% if current_user.type === "Child" %>
   <!-- Please note, the code for this is predicated on current_user being a Child -->
@@ -44,13 +71,6 @@
             value: {{present.toy.value}}
             descript: {{present.toy.description}}
           </div>
-          <!-- We dont need more info for the child view -->
-            <div class="present_child">
-              child name: {{present.child.name}}
-            </div>
-            <div class="present_elf">
-              elf name: {{present.elf.name}}
-            </div>
       </div>
       <!-- end presents list -->
       <div id="create-present">
