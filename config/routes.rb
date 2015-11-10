@@ -1,4 +1,21 @@
 Rails.application.routes.draw do
+
+  root 'application#welcome'
+
+  get 'application/angular'
+
+  # this is temporary for now. We will have to use `only`/`except` to ensure that we have correct default formats for different paths
+  resources :users, defaults: { format: :json }
+  resources :judgments, defaults: { format: :json }
+  resources :toys, defaults: { format: :json }
+  resources :presents, defaults: { format: :json }
+
+  get '/session' => 'session#current_user', defaults: { format: :json }
+  post '/users' => 'users#create'
+  post '/session' =>'session#create'
+  delete '/session' => 'session#destroy'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
