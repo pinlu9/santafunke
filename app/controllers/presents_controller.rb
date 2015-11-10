@@ -8,7 +8,7 @@ class PresentsController < ApplicationController
 
   def mine
     # We know that User.toys correctly selects the toys through presents
-    @dummy_presents  = current_user.presents
+    @dummy_presents = current_user.presents
     @dummy_presents.each do |dummy_present|
       # trying to set object variables = to remote data (associated data)
       dummy_present.toy = Toy.find_by_id(dummy_present.toy_id)
