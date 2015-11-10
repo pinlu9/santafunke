@@ -119,7 +119,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       //values from form
       present: {
         // must add display values
-        //How to get the right child id?
+        //How to get the right child id? By grabbing it from within the SessionController, and storing it as a global variable within this js file
         child_id: childIdForCreatePresent,
         // elf_id: this.newToyValue, non-extant in child version, elf id is only ever set in update
         toy_id: controller.toyID //whatever we want, ties to form

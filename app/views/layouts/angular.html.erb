@@ -60,7 +60,8 @@
         <h1 style="color: blue">current user id is: {{ sessionCtrl.current_user.id }}</h1>
         <h2>Create a new present!</h2>
         <form ng-submit="wishlistCtrl.createPresent()">
-          <input type="hidden" name="wishlistCtrl.current_user_id" value="{{ sessionCtrl.current_user.id }}">
+          <!-- couldn't get this working.. came up with solution in angular.js instead -->
+          <!-- <input type="hidden" name="wishlistCtrl.current_user_id" value="{{ sessionCtrl.current_user.id }}"> -->
           <select ng-model="wishlistCtrl.toyID">
             <option ng-repeat="toy in wishlistCtrl.all_toys"
               value="{{ toy.id }}">
