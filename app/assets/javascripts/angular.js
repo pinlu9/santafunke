@@ -1,6 +1,8 @@
 var SantaFunke = angular.module('SantaFunke', []);
 //ng-route - publishes to the address bar
 
+var childIdForCreatePresent;
+
 /* START Session Controller
 Lets have a session controller so that we can change the styling based on who is logged in
 We can, later, use current_user.type to define which css we link! */
@@ -9,6 +11,7 @@ SantaFunke.controller('SessionController', ['$http', function($http){
   $http.get('/session').then(function(data){
     // the get /session should return a data object that contains a current_user property
     controller.current_user = data.data.current_user;
+    childIdForCreatePresent = data.data.current_user.id;
     console.log("the current user is: ", controller.current_user);
   }, function(error){
     console.log("you have an error: ", error);
@@ -117,7 +120,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       present: {
         // must add display values
         //How to get the right child id?
-        child_id: 1,
+        child_id: childIdForCreatePresent,
         // elf_id: this.newToyValue, non-extant in child version, elf id is only ever set in update
         toy_id: controller.toyID //whatever we want, ties to form
       }
