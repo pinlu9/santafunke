@@ -28,7 +28,7 @@
       GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!
       <% end %>
     </h2>
-  </div>
+
   <!-- Start wishlist "partial" -->
   <% if current_user.type === "Child" %>
   <!-- Please note, the code for this is predicated on current_user being a Child -->
@@ -46,16 +46,22 @@
           </div>
           <!-- We dont need more info for the child view -->
             <div class="present_child">
-              name: {{present.child.name}}
+              child name: {{present.child.name}}
             </div>
             <div class="present_elf">
-              name: {{present.elf.name}}
+              elf name: {{present.elf.name}}
             </div>
       </div>
       <!-- end presents list -->
       <div id="create-present">
+
+        <!-- got this to work by nesting the ToyController within the SessionController -->
+
+        <h1 style="color: blue">current user id is: {{ sessionCtrl.current_user.id }}</h1>
+        <h2>Create a new present!</h2>
         <form ng-submit="wishlistCtrl.createPresent()">
-          <input type="hidden" ng-model="wishlistCtrl.current_user_id" value="<%=current_user.id%>">
+          <!-- couldn't get this working.. came up with solution in angular.js instead -->
+          <!-- <input type="hidden" name="wishlistCtrl.current_user_id" value="{{ sessionCtrl.current_user.id }}"> -->
           <select ng-model="wishlistCtrl.toyID">
             <option ng-repeat="toy in wishlistCtrl.all_toys"
               value="{{ toy.id }}">
