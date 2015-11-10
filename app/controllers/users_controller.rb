@@ -4,6 +4,14 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def children_index
+    @children = Child.all
+  end
+
+  def elves_index
+    @elves = Elf.all
+  end
+
   def show
     @users = [User.find_by_id(session[:current_user_id])]
   end

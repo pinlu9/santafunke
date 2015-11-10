@@ -29,6 +29,18 @@
       <% end %>
     </h2>
 
+
+  <!-- Start naughty/nice elf "partial" -->
+<% if current_user.type === "Elf" %>
+  <!-- Instantiate the list of children using the ChildrenController -->
+  <div id="naughty-nice" ng-controller="ChildrenController as naughtyNiceCtrl">
+    <div class="child" ng-repeat="child in naughtyNiceCtrl.children">
+      <!-- entirety of the child view. click to expand the child's wishlist. -->
+      <h1>{{child.name}}</h1></br>
+    </div>
+  </div>
+<% end %>
+
   <!-- Start wishlist "partial" -->
   <% if current_user.type === "Child" %>
   <!-- Please note, the code for this is predicated on current_user being a Child -->

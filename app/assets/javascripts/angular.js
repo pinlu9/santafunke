@@ -2,6 +2,7 @@ var SantaFunke = angular.module('SantaFunke', []);
 //ng-route - publishes to the address bar
 
 var childIdForCreatePresent;
+// var userType;
 
 /* START Session Controller
 Lets have a session controller so that we can change the styling based on who is logged in
@@ -12,6 +13,7 @@ SantaFunke.controller('SessionController', ['$http', function($http){
     // the get /session should return a data object that contains a current_user property
     controller.current_user = data.data.current_user;
     childIdForCreatePresent = data.data.current_user.id;
+    // userType = data.data.current_user.type;
     console.log("the current user is: ", controller.current_user);
   }, function(error){
     console.log("you have an error: ", error);
@@ -29,8 +31,10 @@ We need to create a flexible controller for Elves and Children
 They're both users, so they share certain data points, but they have different functionality? */
 SantaFunke.controller('ChildrenController', ['$http', function($http){
   var controller = this;
-  $http.get('/users').then(function(data){
+  $http.get('/users/children').then(function(data){
     // the get /users should return a data object containing all of the children
+    controller.children = data.data.children
+    console.log(data);
   }, function(error){
     //what should we do with the errors?
   });
