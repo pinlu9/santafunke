@@ -52,7 +52,6 @@ SantaFunke.controller('ToyController', ['$http', function($http){
   var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
   this.get_all_toys = function(){
-    // Mon 2:17 this works
     //hits toys#index which should return all the toys
     $http.get('/toys').then(function(data){
       // the get /toy should return a data object containing all the toys
@@ -81,14 +80,14 @@ SantaFunke.controller('ToyController', ['$http', function($http){
   /* Call the function on instantiation */
   this.get_presents();
 
-
-  // NOT HERE YET
   this.createToy = function(){
     // temporarily add to the list until the AJAX query completes
-    controller.my_toys.push({
-      name: this.newToyName + "...loading",
-      value: this.newToyValue + "...loading",
-      description: this.newToyDescription + "...loading"
+    // do we even want to do this? Kind of flashes before the data saves to the db and the name of the toy is permanently added to the dropdown list.. 
+    console.log("testing in the createToy function!");
+    controller.all_toys.push({
+      name: controller.newToyName + "...loading",
+      value: controller.newToyValue + "...loading",
+      description: controller.newToyDescription + "...loading"
     });
 
     //make a post to /toys
@@ -97,20 +96,21 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       authenticity_token: authenticity_token,
       //values from form
       toy: {
-        name: this.newToyName,
-        value: this.newToyValue,
-        description: this.newToyDescription
+        name: controller.newToyName,
+        value: controller.newToyValue,
+        description: controller.newToyDescription
       }
     }).then(function(data){
-      controller.my_toys.pop();
-      controller.my_toys.push(data.toy); //what does this look like?
-      controller.get_presents(); //wtFrig?
+      console.log("the new toy: ", data);
+      controller.all_toys.pop();
+      controller.all_toys.push(data.data); //what does this look like?
+      // controller.get_presents(); //wtFrig?
     },function(error){
       // do what
     });
   };
 
-  //WORKING ON THIS
+// working as of 945pm on Monday 11/9
   this.createPresent = function(){
     //make a post to /presents
     $http.post('/presents', {
