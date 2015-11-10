@@ -55,8 +55,3 @@ marquee {
 .child {
   border: 2px solid black;
 }
-
-body {
-  background-image: url('http://i.giphy.com/4M6xlFxZskH8A.gif');
-  background-size: cover;
-}
