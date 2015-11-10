@@ -39,11 +39,16 @@
       <h1>{{child.name}}</h1></br>
       <div class="wishlist">
         <div class="present" ng-repeat="present in child.presents">
-          toy name: {{present.toy.name}} 
+          toy name: {{present.toy.name}}
           worked on by: {{present.elf.name}}
         </div>
       </div>
       <!-- start judgment "partial" -->
+      <div class="judgment_day">
+        <div class="judgment" ng-repeat="judgment in child.judgments">
+          <!-- come back and insert elf name, description, naughty/nice, edit button -->
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
@@ -63,13 +68,6 @@
             value: {{present.toy.value}}
             descript: {{present.toy.description}}
           </div>
-          <!-- We dont need more info for the child view -->
-            <div class="present_child">
-              child name: {{present.child.name}}
-            </div>
-            <div class="present_elf">
-              elf name: {{present.elf.name}}
-            </div>
       </div>
       <!-- end presents list -->
       <div id="create-present">

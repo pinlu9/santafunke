@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   end
 
   def children_index
-    @children = Child.all.includes(:presents)
+    @children = Child.all.includes(:presents, :judgments)
   end
 
   def elves_index
