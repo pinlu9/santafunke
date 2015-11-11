@@ -1,8 +1,9 @@
 var SantaFunke = angular.module('SantaFunke', []);
 //ng-route - publishes to the address bar
 
-var childIdForCreatePresent;
+var currentUserId;
 // var userType;
+var currentUserName;
 
 /* START Session Controller
 Lets have a session controller so that we can change the styling based on who is logged in
@@ -12,7 +13,8 @@ SantaFunke.controller('SessionController', ['$http', function($http){
   $http.get('/session').then(function(data){
     // the get /session should return a data object that contains a current_user property
     controller.current_user = data.data.current_user;
-    childIdForCreatePresent = data.data.current_user.id;
+    currentUserId = data.data.current_user.id;
+    currentUserName = data.data.current_user.name;
     // userType = data.data.current_user.type;
     console.log("the current user is: ", controller.current_user);
   }, function(error){
@@ -33,8 +35,8 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
   var controller = this;
   $http.get('/users/children').then(function(data){
     // the get /users should return a data object containing all of the children
-    controller.children = data.data.children
-    console.log(data);
+    controller.children = data.data.children;
+    // console.log(data);
   }, function(error){
     //what should we do with the errors?
   });
@@ -127,7 +129,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       present: {
         // must add display values
         //How to get the right child id? By grabbing it from within the SessionController, and storing it as a global variable within this js file
-        child_id: childIdForCreatePresent,
+        child_id: currentUserId,
         // elf_id: this.newToyValue, non-extant in child version, elf id is only ever set in update
         toy_id: controller.toyID //whatever we want, ties to form
       }
@@ -154,27 +156,36 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 // we'll call this function through the judgment controller
 // judgement controller is our portal to display viewed children’s wishlist, edit the wishlist by attaching/removing self (elf_id), create judgements
 
-SantaFunke.controller('JudgmentController', ['$http', function($http){
+// This exists purely for creating judgments
+SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope, $http){
   var controller = this;
-  $http.get('/judgments').then(function(data){
-    // the get /users should return a data object containing all of the children
-    controller.judgments = data.data.judgments
-    console.log(data);
-  }, function(error){
-    //what should we do with the errors?
-  });
+  var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  // console.log("$scope.$parent is: ", $scope.$parent);
+  // console.log("current user info: ", currentUserId, currentUserName);
 
-  //hits presents#index which should return the toys that belong to the current user THROUGH presents
-  this.get_presents = function(){
-   $http.get('/presents').then(function(data){
-     controller.my_toys = data.data.presents;
-     // data.data.presents[index].child / toy / elf
-   }, function(error){
-     //do what
-   });
+  this.createJudgment = function(){
+    console.log("inside of createJudgment function!");
+    $http.post('/judgments', {
+      //include authenticity_token
+      authenticity_token: authenticity_token,
+      //values from form
+      judgment: {
+        // elf_name: controller.elfName,  // can just use currentUserName instead
+        child_id: $scope.$parent.child.id,
+        elf_name: currentUserName,
+        elf_id: currentUserId,
+        description: controller.description,
+        qualifying_adverb: controller.qualifyingAdverb,
+        naughty: true /* for now, this is the default */
+      }
+    }).then(function(data){
+      console.log("judgment post data is: ", data);
+      // find a way to push this into the displayed array of judgments in the parent
+    },function(error){
+      // do what
+    });
   };
-  /* Call the function on instantiation */
-  this.get_presents();
+
 
 }]);
 
