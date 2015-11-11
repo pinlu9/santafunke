@@ -32,7 +32,10 @@ SantaFunke.controller('SessionController', ['$http', function($http){
 This one's just for the kids */
 
 SantaFunke.controller('ChildrenController', ['$http', function($http){
+
   var controller = this;
+  var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
   $http.get('/users/children').then(function(data){
     // the get /users should return a data object containing all of the children
     controller.children = data.data.children;
@@ -54,6 +57,7 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
   create a new toy??
 */
 SantaFunke.controller('ToyController', ['$http', function($http){
+
   var controller = this;
   var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -176,11 +180,14 @@ SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope,
         elf_id: currentUserId,
         description: controller.description,
         qualifying_adverb: controller.qualifyingAdverb,
-        naughty: true /* for now, this is the default */
+        naughty: controller.naughty
       }
     }).then(function(data){
       console.log("judgment post data is: ", data);
       // find a way to push this into the displayed array of judgments in the parent
+      controller.description = "";
+      controller.qualifyingAdverb = "";
+      $scope.$parent.child.judgments.push(data.data);
     },function(error){
       // do what
     });

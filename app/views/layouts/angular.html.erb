@@ -2,10 +2,11 @@
 <html ng-app="SantaFunke">
 <head>
   <title>SantaFunke</title>
-  <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <!-- Compiled and minified CSS -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
+   <!-- our own style sheet -->
+   <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
    <!-- Angular -->
    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" charset="utf-8"></script>
    <!-- Jquery and Materialize.js -->
@@ -120,21 +121,22 @@
                 <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
               </tr>
             </tbody>
+          </table>
             <!-- judgment creation form -->
-            <tbody ng-controller="JudgmentController as judgmentCtrl">
-              <tr>
-                <form ng-submit="judgmentCtrl.createJudgment()">
-                  <!-- just using the currentUserName variable in angular.js instead of capturing it on the form -->
-                  <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
-                  <td></td> <!-- just a blank one to fill the column -->
-                  <td><input type="text" ng-model="judgmentCtrl.description" placeholder="Description"/></td>
-                  <td>To Do: toggle naughtiness</td>
-                  <td><input type="text" ng-model="judgmentCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/></td>
-                  <td><input type="submit" value="submit"/></td>
-                </form>
-              </tr>
-            </tbody>
-            </table>
+            <h5>Submit a new judgment!</h5>
+            <span ng-controller="JudgmentController as judgmentCtrl">
+            <form ng-submit="judgmentCtrl.createJudgment()">
+                <!-- just using the currentUserName variable in angular.js instead of capturing it on the form -->
+                <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
+                <!-- <td></td> just a blank one to fill the column -->
+                <input type="text" ng-model="judgmentCtrl.description" placeholder="Description"/>
+                <input type="checkbox" ng-model="judgmentCtrl.naughty" id="filled-in-box"
+                class="filled-in"/>
+                <label for="filled-in-box">Check this if they were naughty!</label>
+                <input type="text" ng-model="judgmentCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
+                <input type="submit" value="submit"/>
+              </form>
+            </span>
             <!-- create judgment button -->
           </div> <!-- end of the judgmentday div -->
 
