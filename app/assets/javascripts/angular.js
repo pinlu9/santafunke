@@ -1,8 +1,9 @@
 var SantaFunke = angular.module('SantaFunke', []);
 //ng-route - publishes to the address bar
 
-var childIdForCreatePresent;
+var currentUserId;
 // var userType;
+var currentUserName;
 
 /* START Session Controller
 Lets have a session controller so that we can change the styling based on who is logged in
@@ -12,7 +13,8 @@ SantaFunke.controller('SessionController', ['$http', function($http){
   $http.get('/session').then(function(data){
     // the get /session should return a data object that contains a current_user property
     controller.current_user = data.data.current_user;
-    childIdForCreatePresent = data.data.current_user.id;
+    currentUserId = data.data.current_user.id;
+    currentUserName = data.data.current_user.name;
     // userType = data.data.current_user.type;
     console.log("the current user is: ", controller.current_user);
   }, function(error){
@@ -127,7 +129,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       present: {
         // must add display values
         //How to get the right child id? By grabbing it from within the SessionController, and storing it as a global variable within this js file
-        child_id: childIdForCreatePresent,
+        child_id: currentUserId,
         // elf_id: this.newToyValue, non-extant in child version, elf id is only ever set in update
         toy_id: controller.toyID //whatever we want, ties to form
       }
@@ -157,17 +159,23 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 // This exists purely for creating judgments
 SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope, $http){
   var controller = this;
-  console.log("$scope.$parent is: ", $scope.$parent);
+  // console.log("$scope.$parent is: ", $scope.$parent);
+  // console.log("current user info: ", currentUserId, currentUserName);
 
   this.createJudgment = function(){
+    console.log("inside of createJudgment function!");
     $http.post('/judgments', {
       //include authenticity_token
       authenticity_token: authenticity_token,
       //values from form
       judgment: {
-        elf_name: controller.elfName,
-        description: controller.description
-        //naughty: controller.naughty is default true for now
+        // elf_name: controller.elfName,  // can just use currentUserName instead
+        child_id: $scope.$parent.child.id,
+        elf_name: currentUserName,
+        elf_id: currentUserId,
+        description: controller.description,
+        qualifying_adverb: controller.qualifyingAdverb,
+        naughty: true
       }
     }).then(function(data){
       console.log("data is: ", data);

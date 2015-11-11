@@ -25,7 +25,7 @@ class JudgmentsController < ApplicationController
 
   def judgment_info
     return params.require(:judgment)
-            .permit(:elf_name, :description, :naughty)
+            .permit(:child_id, :elf_name, :elf_id, :description, :qualifying_adverb, :naughty)
   end
 
 
