@@ -51,3 +51,7 @@ marquee {
   margin-left: 50px;
   width: 20%;
 }
+
+.child {
+  border: 2px solid black;
+}

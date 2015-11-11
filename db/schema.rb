@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110171422) do
+ActiveRecord::Schema.define(version: 20151110214029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20151110171422) do
     t.string   "description"
     t.boolean  "naughty",           default: true
     t.string   "qualifying_adverb"
+    t.string   "elf_name"
   end
 
   create_table "presents", force: :cascade do |t|

@@ -68,7 +68,7 @@
       You are {{sessionCtrl.current_user.age}} years old. You've grown so much in the past year!
       <% end %>
       <% if current_user.type === "Elf" %>
-      GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!
+      <h5 class="alltab">GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!</h5>
       <% end %>
     </h4>
     <br>
@@ -77,30 +77,68 @@
 
 <div class="alltab"> <!-- whole page contained in this div -->
   <!-- Start naughty/nice elf "partial" -->
-<% if current_user.type === "Elf" %>
-  <!-- Instantiate the list of children using the ChildrenController -->
-  <div id="naughty-nice" ng-controller="ChildrenController as naughtyNiceCtrl">
-    <div class="child" ng-repeat="child in naughtyNiceCtrl.children">
-      <!-- entirety of the child view. click to expand the child's wishlist. -->
-      <h1>{{child.name}}</h1></br>
-      <div class="wishlist">
-        <div class="present" ng-repeat="present in child.presents">
-          toy name: {{present.toy.name}}
-          worked on by: {{present.elf.name}}
+  <% if current_user.type === "Elf" %>
+    <!-- Instantiate the list of children using the ChildrenController -->
+    <div id="naughty-nice" ng-controller="ChildrenController as naughtyNiceCtrl">
+      <div class="child" ng-repeat="child in naughtyNiceCtrl.children">
+        <!-- entirety of the child view. click to expand the child's wishlist. -->
+        <h4>{{child.name}}</h4></br>
+        <div class="wishlist">
+            <table class="highlight">
+              <thead>
+                <tr>
+                  <th data-field="name">Name</th>
+                  <th data-field="value">Value</th>
+                  <th data-field="description">Description</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="present in child.presents">
+                <tr>
+                  <td>{{present.toy.name}}</td>
+                  <td>{{present.toy.value}}</td>
+                  <td>{{present.toy.description}}</td>
+                </tr>
+              </tbody>
+            </table>
         </div>
-      </div>
-      <!-- start judgment "partial" -->
-      <div class="judgment_day">
-        <div class="judgment" ng-repeat="judgment in child.judgments">
-          {{child.name}} did this: {{judgment.description}}
-          <!-- come back and insert elf name, description, naughty/nice, edit button -->
-        </div> <!-- closes list of judgments -->
-        <!-- Create a new judgment -->
-        testing in judgment creation thingy
-      </div> <!-- closes JUDGMENT DAY -->
-    </div> <!-- closes the ng-repeat per child -->
-  </div> <!-- closes the ChildrenController -->
-<% end %>
+
+        <!-- start judgment "partial" -->
+      <hr>
+        <div class="judgment_day">
+          <table class="highlight">
+            <thead>
+              <tr>
+                <th data-field="elf_name">Judger</th>
+                <th data-field="description">Description</th>
+                <th data-field="naughtiness">Naughty?</th>
+              </tr>
+            </thead>
+            <tbody class="judgment" ng-repeat="judgment in child.judgments">
+              <tr>
+                <td>{{judgment.elf_name}}</td>
+                <td>{{judgment.description}}</td>
+                <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
+              </tr>
+            </tbody>
+            <!-- judgment creation form -->
+            <tbody ng-controller="JudgmentController as judgmentCtrl">
+              <tr>
+                <form ng-submit="judgmentCtrl.createJudgment()">
+                  <td><input type="text" ng-model="judgmentCtrl.elfName" readonly value="Santo" placeholder="Santo"/></td>
+                  <!-- Above should not be hardcoded -->
+                  <td><input type="text" ng-model="judgmentCtrl.description" placeholder="Description"/></td>
+                  <td><input type="submit" value="submit"/></td>
+                  <td>To Do: toggle naughtiness</td>
+                </form>
+              </tr>
+            </tbody>
+            </table>
+            <!-- create judgment button -->
+          </div>
+
+      </div> <!-- closes the ng-repeat per child -->
+    </div> <!-- closes the ChildrenController -->
+  <% end %>
 
   <!-- Start wishlist "partial" -->
 <% if current_user.type === "Child" %>
@@ -112,10 +150,10 @@
   <!-- Please note, the code for this is predicated on current_user being a Child -->
     <!-- The use of "wishlistCtrl" is an attempt to be semantic, we want to use this model as the portal to all wishlist stuff
          Toy creation, toy reading, present creation, toy editing FB/KW -->
-    <div class="wishlist" ng-controller="ToyController as wishlistCtrl">
+    <div ng-controller="ToyController as wishlistCtrl">
       <!-- my_toys -->
       <h5>These are presents!</h5>
-      <div class="present">
+      <div class="wishlist">
           <!-- 'GET' /presents must return current_user's -->
           <table class="highlight">
             <thead>
