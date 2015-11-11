@@ -36,7 +36,7 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
   $http.get('/users/children').then(function(data){
     // the get /users should return a data object containing all of the children
     controller.children = data.data.children;
-    console.log(data);
+    // console.log(data);
   }, function(error){
     //what should we do with the errors?
   });
@@ -159,6 +159,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 // This exists purely for creating judgments
 SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope, $http){
   var controller = this;
+  var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   // console.log("$scope.$parent is: ", $scope.$parent);
   // console.log("current user info: ", currentUserId, currentUserName);
 
@@ -175,10 +176,10 @@ SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope,
         elf_id: currentUserId,
         description: controller.description,
         qualifying_adverb: controller.qualifyingAdverb,
-        naughty: true
+        naughty: true /* for now, this is the default */
       }
     }).then(function(data){
-      console.log("data is: ", data);
+      console.log("judgment post data is: ", data);
       // find a way to push this into the displayed array of judgments in the parent
     },function(error){
       // do what
