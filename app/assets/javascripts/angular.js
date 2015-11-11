@@ -155,10 +155,11 @@ SantaFunke.controller('ToyController', ['$http', function($http){
 // judgement controller is our portal to display viewed children’s wishlist, edit the wishlist by attaching/removing self (elf_id), create judgements
 
 // This exists purely for creating judgments
-SantaFunke.controller('JudgmentController', ['$http', function($http){
+SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope, $http){
   var controller = this;
+  console.log("$scope.$parent is: ", $scope.$parent);
 
-  controller.createJudgment = function(){
+  this.createJudgment = function(){
     $http.post('/judgments', {
       //include authenticity_token
       authenticity_token: authenticity_token,
@@ -169,7 +170,7 @@ SantaFunke.controller('JudgmentController', ['$http', function($http){
         //naughty: controller.naughty is default true for now
       }
     }).then(function(data){
-      // console.log("present is: ", present);
+      console.log("data is: ", data);
       // find a way to push this into the displayed array of judgments in the parent
     },function(error){
       // do what
