@@ -1,5 +1,7 @@
 class PresentsController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
+
   # This is called by the get_presents method in the angular ToyController
   # We delegate .presents to User in order to query efficiently
   def index
@@ -40,6 +42,14 @@ class PresentsController < ApplicationController
 
   def edit
     # edit present
+  end
+
+  def destroy
+    @present = Present.find_by_id(params[:id])
+    if @present.destroy
+      render json: @present
+    else
+    end
   end
 
   private

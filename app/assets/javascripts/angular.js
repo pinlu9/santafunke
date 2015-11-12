@@ -115,7 +115,7 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
 /* START Toy Controller
   create a new toy??
 */
-SantaFunke.controller('ToyController', ['$http', function($http){
+SantaFunke.controller('ToyController', ['$scope', '$http', function($scope, $http){
 
   var controller = this;
   var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -138,7 +138,16 @@ SantaFunke.controller('ToyController', ['$http', function($http){
   this.get_all_toys();
 
    //hits presents#index which should return the toys that belong to the current user THROUGH presents
-
+  this.get_my_presents = function(){
+    $http.get('/presents/mine').then(function(data){
+      controller.my_toys = data.data.presents;
+      // data.data.presents[index].child / toy / elf
+    }, function(error){
+      //do what
+    });
+  };
+  /* Call the function on instantiation */
+  this.get_my_presents();
 
   this.createToy = function(){
     // temporarily add to the list until the AJAX query completes
@@ -192,6 +201,23 @@ SantaFunke.controller('ToyController', ['$http', function($http){
       controller.get_my_presents();
     },function(error){
       // do what
+    });
+  };
+
+  this.deletePresent = function(present) {
+    console.log(present);
+    var present_id = present.id;
+    var target = '/presents/' + present_id;
+    $http.delete(target, {
+      authenticity_token: authenticity_token,
+    }).then(function(data){
+      console.log("Successfully Deleted: " + present_id);
+      console.log("$scope stuff: ", $scope);
+      $scope.wishlistCtrl.get_my_presents();
+      controller.toyID = null; 
+      // $scope.$parent.$parent.naughtyNiceCtrl.refresh();
+      /* The magic shiiiiz :: refreshes all everything*/
+    },function(error){
     });
   };
 
