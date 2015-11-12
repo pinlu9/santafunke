@@ -154,11 +154,11 @@ SantaFunke.controller('MapController', ['$scope', '$http', function($scope, $htt
       zoom: 15,
       center: latlng,
       mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+    };
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
     controller.codeAddress(currentUserAddress);
-  }
+  };
 
   this.initializeMapAndMarkersInElfView = function() {
     // console.log("testing in initializeMapsInElfView, $scope.$parent is:", $scope.$parent);
@@ -172,7 +172,7 @@ SantaFunke.controller('MapController', ['$scope', '$http', function($scope, $htt
       zoom: 4,
       center: latlng,
       mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+    };
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
     // for (var i = 0; i < children.length; i++) {
@@ -180,7 +180,7 @@ SantaFunke.controller('MapController', ['$scope', '$http', function($scope, $htt
     // }
 
     controller.codeAddress(kidzAddresses);
-  }
+  };
 
   this.codeAddress = function(addresses) {
     for (var j = 0; j < addresses.length; j++) {
@@ -201,7 +201,7 @@ SantaFunke.controller('MapController', ['$scope', '$http', function($scope, $htt
         }
       });
     }
-  }
+  };
 
 }]);
 
