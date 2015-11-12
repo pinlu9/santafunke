@@ -26,7 +26,7 @@ SantaFunke.controller('SessionController', ['$http', function($http){
 
 
 /* START Login controller */
-SantaFunke.controller('UserController', ['$http', function($http) {
+SantaFunke.controller('UserController', ['$http', '$scope', function($http, $scope) {
     var controller = this;
 
     controller.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
@@ -43,6 +43,7 @@ SantaFunke.controller('UserController', ['$http', function($http) {
         }
       }).then(function(data) {
         console.log("data is: ", data);
+        window.location = "/application/angular?";
       },function(error) {
         console.log("ya fucked up: ", error);
       });
@@ -63,7 +64,17 @@ SantaFunke.controller('UserController', ['$http', function($http) {
           type: controller.type,
         }
       }).then(function(data){
-        console.log(data);
+        $http.post('/session', {
+          user: {
+            email: controller.email,
+            password: controller.password
+          }
+        }).then(function(data) {
+          console.log("data is: ", data);
+          window.location = "/application/angular?";
+        },function(error) {
+          console.log("ya fucked up: ", error);
+        });
         // controller.login();  STRETCH GOAL: get logged in upon sign up
       },function(error){
 
@@ -214,7 +225,7 @@ SantaFunke.controller('ToyController', ['$scope', '$http', function($scope, $htt
       console.log("Successfully Deleted: " + present_id);
       console.log("$scope stuff: ", $scope);
       $scope.wishlistCtrl.get_my_presents();
-      controller.toyID = null; 
+      controller.toyID = null;
       // $scope.$parent.$parent.naughtyNiceCtrl.refresh();
       /* The magic shiiiiz :: refreshes all everything*/
     },function(error){
@@ -286,7 +297,7 @@ SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope,
     });
   };
 
-  this.editJudgment = function(judgment, $index){
+  this.editJudgment = function(judgment){
     var judgment_id = judgment.id;
     var target = '/judgments/' + judgment_id;
     console.log($scope);

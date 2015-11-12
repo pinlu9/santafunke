@@ -133,12 +133,12 @@
                   <td><button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Edit</button></td>
                 </tr>
                 <tr ng-show="judgmentCtrl.editing">
-                  <td>
-                      <form>Editing Form
-                        <button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button>
-                        <!-- save should call the edit function -->
-                      </form>
-                  </td>
+                  <form ng-submit="judgmentCtrl.editJudgment(judgment)">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button type="submit" ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button></td>
+                  </form>
                 </tr>
 
               </tbody>

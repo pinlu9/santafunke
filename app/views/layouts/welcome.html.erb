@@ -56,7 +56,8 @@
 </nav> -->
 
 <h1>Log In</h1>
-<form action="<%= application_angular_path %>" method="GET" name="userLogin" ng-submit="user.login()">
+<!-- Nope, this action needs to be taken after the ajax ng-route -->
+<form name="userLogin" ng-submit="user.login()">
   <div layout layout-sm="column">
     <md-input-container flex>
       <label>Email</label>
