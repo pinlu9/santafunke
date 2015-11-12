@@ -12,6 +12,7 @@ json.children(@children) do |child|
     json.elf present.elf
   end
   json.judgments(child.judgments) do |judgment|
+    json.id judgment.id
     json.judgment_child_id judgment.child_id
     json.elf_name judgment.elf_name
     json.description judgment.description

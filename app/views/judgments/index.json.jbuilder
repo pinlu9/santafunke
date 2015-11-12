@@ -1,5 +1,6 @@
 json.judgments(@judgments) do |judgment|
 
+  json.id judgment.id
   json.child_id judgment.child_id
   json.elf_id judgment.elf_id
   json.description judgment.description

@@ -115,37 +115,39 @@
         <!-- start judgment "partial" -->
       <hr>
         <div class="judgment_day">
-          <table class="highlight">
-            <thead>
-              <tr>
-                <th data-field="elf_name">Judger</th>
-                <th data-field="description">Description</th>
-                <th data-field="naughtiness">Naughty?</th>
-              </tr>
-            </thead>
-            <tbody class="judgment" ng-repeat="judgment in child.judgments">
-              <tr>
-                <td>{{judgment.elf_name}}</td>
-                <td>{{judgment.description}}</td>
-                <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
-              </tr>
-            </tbody>
-          </table>
-            <!-- judgment creation form -->
-            <h5>Submit a new judgment!</h5>
-            <span ng-controller="JudgmentController as judgmentCtrl">
-            <form ng-submit="judgmentCtrl.createJudgment()">
-                <!-- just using the currentUserName variable in angular.js instead of capturing it on the form -->
-                <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
-                <!-- <td></td> just a blank one to fill the column -->
-                <input type="text" ng-model="judgmentCtrl.description" placeholder="Description"/>
-                <input type="checkbox" ng-model="judgmentCtrl.naughty" id="filled-in-box"
-                class="filled-in"/>
-                <label for="filled-in-box">Check this if they were naughty!</label>
-                <input type="text" ng-model="judgmentCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
-                <input type="submit" value="submit"/>
-              </form>
-            </span>
+          <div ng-controller="JudgmentController as judgmentCtrl">
+            <table class="highlight">
+              <thead>
+                <tr>
+                  <th data-field="elf_name">Judger</th>
+                  <th data-field="description">Description</th>
+                  <th data-field="naughtiness">Naughty?</th>
+                </tr>
+              </thead>
+              <tbody class="judgment" ng-repeat="judgment in child.judgments">
+                <tr>
+                  <td>{{judgment.elf_name}}</td>
+                  <td>{{judgment.description}}</td>
+                  <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
+                  <td><button ng-click="judgmentCtrl.deleteJudgment(judgment)">Delete</td>
+                </tr>
+              </tbody>
+            </table>
+              <!-- judgment creation form -->
+              <h5>Submit a new judgment!</h5>
+
+                <form ng-submit="judgmentCtrl.createJudgment()">
+                  <!-- just using the currentUserName variable in angular.js instead of capturing it on the form -->
+                  <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
+                  <!-- <td></td> just a blank one to fill the column -->
+                  <input type="text" ng-model="judgmentCtrl.description" placeholder="Description"/>
+                  <input type="checkbox" ng-model="judgmentCtrl.naughty" id="filled-in-box"
+                  class="filled-in"/>
+                  <label for="filled-in-box">Check this if they were naughty!</label>
+                  <input type="text" ng-model="judgmentCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
+                  <input type="submit" value="submit"/>
+                </form>
+          </div>
             <!-- create judgment button -->
           </div> <!-- end of the judgmentday div -->
 
