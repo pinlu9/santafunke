@@ -36,6 +36,17 @@ SantaFunke.controller('UserController', ['$http', function($http) {
     });
 
     controller.login = function(){
+      $http.post('/session', {
+        user: {
+          email: controller.loginEmail,
+          password: controller.loginPassword
+        }
+      }).then(function(data) {
+        console.log("data is: ", data);
+      },function(error) {
+        console.log("ya fucked up: ", error);
+      });
+      //post to session
 
     };
 
@@ -53,7 +64,7 @@ SantaFunke.controller('UserController', ['$http', function($http) {
         }
       }).then(function(data){
         console.log(data);
-
+        // controller.login();  STRETCH GOAL: get logged in upon sign up
       },function(error){
 
       });
