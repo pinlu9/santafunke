@@ -4,6 +4,21 @@ var SantaFunke = angular.module('SantaFunke', ['ngMaterial']);
 var currentUserId;
 // var userType;
 var currentUserName;
+var currentUserAddress;
+var kidzAddresses = [];
+
+// this will allow us to execute functions after the Angular template has been completely loaded.. got it from: http://gsferreira.com/archive/2015/03/angularjs-after-render-directive/
+SantaFunke.directive('afterRender', ['$timeout', function ($timeout) {
+    var def = {
+        restrict: 'A',
+        terminal: true,
+        transclude: false,
+        link: function (scope, element, attrs) {
+            $timeout(scope.$eval(attrs.afterRender), 0);  //Calling a scoped method
+        }
+    };
+    return def;
+}]);
 
 /* START Session Controller
 Lets have a session controller so that we can change the styling based on who is logged in
@@ -15,7 +30,7 @@ SantaFunke.controller('SessionController', ['$http', function($http){
     controller.current_user = data.data.current_user;
     currentUserId = data.data.current_user.id;
     currentUserName = data.data.current_user.name;
-    // userType = data.data.current_user.type;
+    currentUserAddress = [data.data.current_user.address]; // setting this equal to an array so that we can use one codeAddress function later to set the markers on the maps
     console.log("the current user is: ", controller.current_user);
   }, function(error){
     console.log("you have an error: ", error);
@@ -97,7 +112,10 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
   $http.get('/users/children').then(function(data){
     // the get /users should return a data object containing all of the children
     controller.children = data.data.children;
-    // console.log(data);
+    for (var i = 0; i < controller.children.length; i++) {
+      kidzAddresses.push(controller.children[i].address);
+    }
+    console.log("inside of ChildrenController callback, kidzAddresses is now: ", kidzAddresses);
   }, function(error){
     //what should we do with the errors?
   });
@@ -116,9 +134,78 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
 
 }]);
 
-/* END User Controller */
+/* END Child Controller */
 
 
+/* START Maps Controller */
+
+SantaFunke.controller('MapController', ['$scope', '$http', function($scope, $http){
+
+  var controller = this;
+  var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+  var geocoder;
+  var map;
+
+  this.initializeMapInChildView = function() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(90, 0); // the north pole, obviously.
+    var mapOptions = {
+      zoom: 15,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    controller.codeAddress(currentUserAddress);
+  }
+
+  this.initializeMapAndMarkersInElfView = function() {
+    // console.log("testing in initializeMapsInElfView, $scope.$parent is:", $scope.$parent);
+    var children = $scope.$parent.naughtyNiceCtrl.children;
+    // console.log("in initializeMapAndMarkersInElfView, children is: ", children);
+    // console.log("and $scope.$parent.controller is: ", $scope.$parent.controller);
+    // var kidzAddresses = [];
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var mapOptions = {
+      zoom: 4,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    // for (var i = 0; i < children.length; i++) {
+    //   kidzAddresses.push(children[i].address);
+    // }
+
+    controller.codeAddress(kidzAddresses);
+  }
+
+  this.codeAddress = function(addresses) {
+    for (var j = 0; j < addresses.length; j++) {
+      geocoder.geocode( { 'address': addresses[j]}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          map.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location,
+              animation: google.maps.Animation.DROP,
+              icon: "http://www.dollywood.com/~/media/ParkContent/DW_COM/DW/Festivals/Icons/christmas_logo.ashx"
+              // icon: "http://images3.wikia.nocookie.net/__cb20110806110719/pvzcc/images/a/a7/Emoticon_epicface.png"
+              //also an option:
+              // icon: "http://forums.childrenwithdiabetes.com/images/smilies/catchu.gif"
+          });
+        } else {
+          alert("Santa could not find you for the following reason: " + status);
+        }
+      });
+    }
+  }
+
+}]);
+
+/* END Maps Controller */
 
 
 

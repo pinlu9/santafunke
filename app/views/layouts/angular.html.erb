@@ -2,6 +2,13 @@
 <html ng-app="SantaFunke">
 <head>
   <title>SantaFunke</title>
+  <!-- MAPPY THINGS IN THE HEAD -->
+  <!-- Now trying just the google maps api instructions instead.. -->
+  <style type="text/css">
+        html, body { height: 100%; margin: 0; padding: 0; }
+        #map { height: 50%; }
+  </style>
+
   <%= csrf_meta_tags %>
 
   <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
@@ -18,7 +25,8 @@
   <!-- Angular Material JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.js"></script>
 
-
+  <!-- Another google maps cdn that i've had to include.. -->
+  <script src="http://maps.googleapis.com/maps/api/js?language=en"></script>
 
 </head>
 <body>
@@ -90,6 +98,9 @@
   <% if current_user.type === "Elf" %>
     <!-- Instantiate the list of children using the ChildrenController -->
     <div id="naughty-nice" ng-controller="ChildrenController as naughtyNiceCtrl">
+      <!-- Trying to render a map with all children on there as markers -->
+      <h5>...like these children!</h5>
+      <div id="map" style="width: 50%; margin: 0 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapAndMarkersInElfView"></div>
       <div class="child" ng-repeat="child in naughtyNiceCtrl.children">
         <!-- entirety of the child view. click to expand the child's wishlist. -->
         <h4>{{child.name}}</h4></br>
@@ -177,6 +188,9 @@
     <!-- child avatar image -->
   <img src="http://1.bp.blogspot.com/-dZWOzEoZHs0/UDILL8QE-hI/AAAAAAAACog/o1V4u2WwFk0/s1600/SMART+BOY+FB.jpg" height="100">
 
+  <!-- Map for child view! -->
+  <h5>Maybe Santa will bring you a present here..</h5>
+  <div id="map" style="width: 50%; margin: 0 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapInChildView"></div>
 
   <!-- Please note, the code for this is predicated on current_user being a Child -->
     <!-- The use of "wishlistCtrl" is an attempt to be semantic, we want to use this model as the portal to all wishlist stuff
