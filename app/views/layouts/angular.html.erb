@@ -119,26 +119,31 @@
             <table class="highlight">
               <thead>
                 <tr>
-                  <th data-field="elf_name">Judger</th>
                   <th data-field="description">Description</th>
+                  <th data-field="elf_name">Judger</th>
                   <th data-field="naughtiness">Naughty?</th>
                 </tr>
               </thead>
               <tbody class="judgment" ng-repeat="judgment in child.judgments" ng-controller="JudgmentController as judgmentCtrl" ng-init="judgmentCtrl.editing=false">
                 <tr ng-hide="judgmentCtrl.editing">
-                  <td>{{judgment.elf_name}}</td>
                   <td>{{judgment.description}}</td>
+                  <td>{{judgment.elf_name}}</td>
                   <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
                   <td><button ng-click="judgmentCtrl.deleteJudgment(judgment)">Delete</button></td>
                   <td><button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Edit</button></td>
                 </tr>
                 <tr ng-show="judgmentCtrl.editing">
-                  <form ng-submit="judgmentCtrl.editJudgment(judgment)">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="submit" ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button></td>
-                  </form>
+
+                      <td>
+                        <form ng-submit="judgmentCtrl.editJudgment(judgment)">
+                        <md-input-container flex>
+                          <label>description</label>
+                          <input ng-model="judgment.description">
+                        </md-input-container>
+                        <button type="submit" ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button>
+                        </form>
+                      </td>
+
                 </tr>
 
               </tbody>

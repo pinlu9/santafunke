@@ -300,7 +300,18 @@ SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope,
   this.editJudgment = function(judgment){
     var judgment_id = judgment.id;
     var target = '/judgments/' + judgment_id;
-    console.log($scope);
+    $http.put(target, {
+      judgment: {
+        child_id: judgment.child_id,
+        elf_name: judgment.elf_name,
+        elf_id: judgment.elf_id,
+        description: judgment.description,
+        qualifying_adverb: judgment.qualifying_adverb,
+        naughty: judgment.naughty
+      }
+    }).then(function(data){
+      $scope.$parent.$parent.naughtyNiceCtrl.refresh();
+    },function(error){});
 
     // $http.delete(target, {
     //   authenticity_token: authenticity_token,
