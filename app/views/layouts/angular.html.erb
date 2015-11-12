@@ -115,7 +115,7 @@
         <!-- start judgment "partial" -->
       <hr>
         <div class="judgment_day">
-          <div ng-controller="JudgmentController as judgmentCtrl">
+          <div ng-controller="JudgmentsController as judgmentsCtrl">
             <table class="highlight">
               <thead>
                 <tr>
@@ -124,28 +124,37 @@
                   <th data-field="naughtiness">Naughty?</th>
                 </tr>
               </thead>
-              <tbody class="judgment" ng-repeat="judgment in child.judgments">
-                <tr>
+              <tbody class="judgment" ng-repeat="judgment in child.judgments" ng-controller="JudgmentController as judgmentCtrl" ng-init="judgmentCtrl.editing=false">
+                <tr ng-hide="judgmentCtrl.editing">
                   <td>{{judgment.elf_name}}</td>
                   <td>{{judgment.description}}</td>
                   <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
-                  <td><button ng-click="judgmentCtrl.deleteJudgment(judgment)">Delete</td>
-                  <td><button ng-click="judgmentCtrl.displayEdit(judgment, $event)">Edit</td>
+                  <td><button ng-click="judgmentCtrl.deleteJudgment(judgment)">Delete</button></td>
+                  <td><button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Edit</button></td>
                 </tr>
+                <tr ng-show="judgmentCtrl.editing">
+                  <td>
+                      <form>Editing Form
+                        <button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button>
+                        <!-- save should call the edit function -->
+                      </form>
+                  </td>
+                </tr>
+
               </tbody>
             </table>
               <!-- judgment creation form -->
               <h5>Submit a new judgment!</h5>
 
-                <form ng-submit="judgmentCtrl.createJudgment()">
+                <form ng-submit="judgmentsCtrl.createJudgment()">
                   <!-- just using the currentUserName variable in angular.js instead of capturing it on the form -->
                   <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
                   <!-- <td></td> just a blank one to fill the column -->
-                  <input type="text" ng-model="judgmentCtrl.description" placeholder="Description"/>
-                  <input type="checkbox" ng-model="judgmentCtrl.naughty" id="filled-in-box"
+                  <input type="text" ng-model="judgmentsCtrl.description" placeholder="Description"/>
+                  <input type="checkbox" ng-model="judgmentsCtrl.naughty" id="filled-in-box"
                   class="filled-in"/>
                   <label for="filled-in-box">Check this if they were naughty!</label>
-                  <input type="text" ng-model="judgmentCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
+                  <input type="text" ng-model="judgmentsCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
                   <input type="submit" value="submit"/>
                 </form>
           </div>

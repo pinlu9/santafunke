@@ -26,7 +26,7 @@ SantaFunke.controller('SessionController', ['$http', function($http){
 
 
 /* START Login controller */
-SantaFunke.controller('LoginController', function() {
+SantaFunke.controller('UserController', function() {
     var controller = this;
 
     controller.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
@@ -232,23 +232,38 @@ SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope,
     });
   };
 
-  this.displayEdit = function(judgment, $event){
-    console.log($event.path[2].children);
-    $event.path[2].innerHTML =
-      '<div class="edit-judgment-form">' +
-        '<form ng-submit="judgmentCtrl.editJudgment(' + judgment.id + ')">' +
-          '<input type="text" ng-model="judgmentCtrl.edited_description" value="' + judgment.description +  '"/>' +
-          // '<input type="checkbox" ng-model="judgmentCtrl.edited_naughty" id="filled-in-box" class="filled-in"/>' +
-          // '<label for="filled-in-box">Check this if they were naughty!</label>' +
-          '<input type="text" ng-model="judgmentCtrl.edited_qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>' +
-          '<input type="submit" value="submit"/>' +
-        '</form>'+
-      '</div>';
+  this.editJudgment = function(judgment, $index){
+    var judgment_id = judgment.id;
+    var target = '/judgments/' + judgment_id;
+    console.log($scope);
+
+    // $http.delete(target, {
+    //   authenticity_token: authenticity_token,
+    // }).then(function(data){
+    //   console.log("Successfully Deleted: " + judgment_id);
+    //   console.log($scope.$parent.$parent);
+    //   $scope.$parent.$parent.naughtyNiceCtrl.refresh();
+    //   $scope.judgmentCtrl.description = judgment.description;
+    //   /* The magic shiiiiz :: refreshes all everything*/
+    // },function(error){
+    // });
   };
 
-  this.editJudgment = function(judgment_id){
-    var target = '/judgments/' + judgment_id;
-    $http.put(target, {
+
+}]);
+
+
+
+/* End Judgement Controller */
+SantaFunke.controller('JudgmentsController', ['$scope', '$http', function($scope, $http){
+  var controller = this;
+  var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  // console.log("$scope.$parent is: ", $scope.$parent);
+  // console.log("current user info: ", currentUserId, currentUserName);
+
+  this.createJudgment = function(){
+    console.log("inside of createJudgment function!");
+    $http.post('/judgments', {
       //include authenticity_token
       authenticity_token: authenticity_token,
       //values from form
@@ -271,15 +286,9 @@ SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope,
     },function(error){
       // do what
     });
-
   };
-
-
 }]);
 
-
-
-/* End Judgement Controller */
 
 
 

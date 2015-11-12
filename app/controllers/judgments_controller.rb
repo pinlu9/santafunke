@@ -24,7 +24,7 @@ class JudgmentsController < ApplicationController
   end
 
   def edit
-    @judgment = Judgment.find_by_id(params.require(:judgment).permit(:id))
+    @judgment = Judgment.find_by_id(params[:id])
     @judgment.update(judgment_info)
   end
 
