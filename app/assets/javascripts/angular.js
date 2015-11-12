@@ -1,16 +1,4 @@
-angular.module('SantaFunke')
-
-.controller('AppCtrl', function($scope) {
-  $scope.title1 = 'Button';
-  $scope.title4 = 'Warn';
-  $scope.isDisabled = true;
-
-  $scope.googleUrl = 'http://google.com';
-
-});
-
-
-var SantaFunke = angular.module('SantaFunke', []);
+var SantaFunke = angular.module('SantaFunke', ['ngMaterial']);
 //ng-route - publishes to the address bar
 
 var currentUserId;
