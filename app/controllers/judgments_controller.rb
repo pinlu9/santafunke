@@ -23,9 +23,9 @@ class JudgmentsController < ApplicationController
   def show
   end
 
-  def edit
-    @judgment = Judgment.find_by_id(params[:id])
-    @judgment.update(judgment_info)
+  def update
+    @judgment = Judgment.update(params[:id], judgment_info)
+    render json: @judgment
   end
 
   def destroy

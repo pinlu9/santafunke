@@ -103,6 +103,7 @@
                 </tr>
               </thead>
               <tbody ng-repeat="present in child.presents">
+                <!-- instantiate present controller, add apply_elf method, create buttons for elf to add/remove self -->
                 <tr>
                   <td>{{present.toy.name}}</td>
                   <td>{{present.toy.value}}</td>
@@ -119,26 +120,31 @@
             <table class="highlight">
               <thead>
                 <tr>
-                  <th data-field="elf_name">Judger</th>
                   <th data-field="description">Description</th>
+                  <th data-field="elf_name">Judger</th>
                   <th data-field="naughtiness">Naughty?</th>
                 </tr>
               </thead>
               <tbody class="judgment" ng-repeat="judgment in child.judgments" ng-controller="JudgmentController as judgmentCtrl" ng-init="judgmentCtrl.editing=false">
                 <tr ng-hide="judgmentCtrl.editing">
-                  <td>{{judgment.elf_name}}</td>
                   <td>{{judgment.description}}</td>
+                  <td>{{judgment.elf_name}}</td>
                   <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
                   <td><button ng-click="judgmentCtrl.deleteJudgment(judgment)">Delete</button></td>
                   <td><button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Edit</button></td>
                 </tr>
                 <tr ng-show="judgmentCtrl.editing">
-                  <td>
-                      <form>Editing Form
-                        <button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button>
-                        <!-- save should call the edit function -->
-                      </form>
-                  </td>
+
+                      <td>
+                        <form ng-submit="judgmentCtrl.editJudgment(judgment)">
+                        <md-input-container flex>
+                          <label>description</label>
+                          <input ng-model="judgment.description">
+                        </md-input-container>
+                        <button type="submit" ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button>
+                        </form>
+                      </td>
+
                 </tr>
 
               </tbody>
@@ -151,9 +157,9 @@
                   <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
                   <!-- <td></td> just a blank one to fill the column -->
                   <input type="text" ng-model="judgmentsCtrl.description" placeholder="Description"/>
-                  <input type="checkbox" ng-model="judgmentsCtrl.naughty" id="filled-in-box"
-                  class="filled-in"/>
-                  <label for="filled-in-box">Check this if they were naughty!</label>
+                    <md-switch ng-model="judgmentsCtrl.naughty" class="md-warn md-block">
+                      Naughty?: {{ judgmentsCtrl.naughty }}
+                    </md-switch>
                   <input type="text" ng-model="judgmentsCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
                   <input type="submit" value="submit"/>
                 </form>

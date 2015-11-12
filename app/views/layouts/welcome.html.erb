@@ -56,7 +56,8 @@
 </nav> -->
 
 <h1>Log In</h1>
-<form action="<%= application_angular_path %>" method="GET" name="userLogin" ng-submit="user.login()">
+<!-- Nope, this action needs to be taken after the ajax ng-route -->
+<form name="userLogin" ng-submit="user.login()">
   <div layout layout-sm="column">
     <md-input-container flex>
       <label>Email</label>
@@ -122,6 +123,9 @@
             </div>
           </div> -->
         </md-input-container>
+        <md-switch ng-model="user.type" ng-true-value="'Elf'" ng-false-value="'Child'" class="md-warn md-block">
+          Type: {{ user.type }}
+        </md-switch>
       </div>
       <button type="submit">Submit</button>
     </form>
