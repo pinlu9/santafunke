@@ -3,17 +3,27 @@
 <head>
   <title>SantaFunke</title>
   <%= csrf_meta_tags %>
-  <!-- Compiled and minified CSS -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
-   <!-- our own style sheet -->
-   <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
-   <!-- Angular -->
-   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" charset="utf-8"></script>
-   <!-- Jquery and Materialize.js -->
-   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js"></script>
+
+  <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+
+  <!-- our own style sheet -->
+  <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
+
+  <!-- Angular Material Dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
+
+  <!-- Angular Material JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.js"></script>
+
+
+
 </head>
 <body>
+
+
   <header>
     <nav>
         <!-- Christmas Countdown Start -->
@@ -52,7 +62,6 @@
     <br>
   </header>
 <!--  -->
-
 
   <!-- Session Things -->
   <div id="session-div"
@@ -106,37 +115,49 @@
         <!-- start judgment "partial" -->
       <hr>
         <div class="judgment_day">
-          <table class="highlight">
-            <thead>
-              <tr>
-                <th data-field="elf_name">Judger</th>
-                <th data-field="description">Description</th>
-                <th data-field="naughtiness">Naughty?</th>
-              </tr>
-            </thead>
-            <tbody class="judgment" ng-repeat="judgment in child.judgments">
-              <tr>
-                <td>{{judgment.elf_name}}</td>
-                <td>{{judgment.description}}</td>
-                <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
-              </tr>
-            </tbody>
-          </table>
-            <!-- judgment creation form -->
-            <h5>Submit a new judgment!</h5>
-            <span ng-controller="JudgmentController as judgmentCtrl">
-            <form ng-submit="judgmentCtrl.createJudgment()">
-                <!-- just using the currentUserName variable in angular.js instead of capturing it on the form -->
-                <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
-                <!-- <td></td> just a blank one to fill the column -->
-                <input type="text" ng-model="judgmentCtrl.description" placeholder="Description"/>
-                <input type="checkbox" ng-model="judgmentCtrl.naughty" id="filled-in-box"
-                class="filled-in"/>
-                <label for="filled-in-box">Check this if they were naughty!</label>
-                <input type="text" ng-model="judgmentCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
-                <input type="submit" value="submit"/>
-              </form>
-            </span>
+          <div ng-controller="JudgmentsController as judgmentsCtrl">
+            <table class="highlight">
+              <thead>
+                <tr>
+                  <th data-field="elf_name">Judger</th>
+                  <th data-field="description">Description</th>
+                  <th data-field="naughtiness">Naughty?</th>
+                </tr>
+              </thead>
+              <tbody class="judgment" ng-repeat="judgment in child.judgments" ng-controller="JudgmentController as judgmentCtrl" ng-init="judgmentCtrl.editing=false">
+                <tr ng-hide="judgmentCtrl.editing">
+                  <td>{{judgment.elf_name}}</td>
+                  <td>{{judgment.description}}</td>
+                  <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
+                  <td><button ng-click="judgmentCtrl.deleteJudgment(judgment)">Delete</button></td>
+                  <td><button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Edit</button></td>
+                </tr>
+                <tr ng-show="judgmentCtrl.editing">
+                  <td>
+                      <form>Editing Form
+                        <button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button>
+                        <!-- save should call the edit function -->
+                      </form>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+              <!-- judgment creation form -->
+              <h5>Submit a new judgment!</h5>
+
+                <form ng-submit="judgmentsCtrl.createJudgment()">
+                  <!-- just using the currentUserName variable in angular.js instead of capturing it on the form -->
+                  <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
+                  <!-- <td></td> just a blank one to fill the column -->
+                  <input type="text" ng-model="judgmentsCtrl.description" placeholder="Description"/>
+                  <input type="checkbox" ng-model="judgmentsCtrl.naughty" id="filled-in-box"
+                  class="filled-in"/>
+                  <label for="filled-in-box">Check this if they were naughty!</label>
+                  <input type="text" ng-model="judgmentsCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
+                  <input type="submit" value="submit"/>
+                </form>
+          </div>
             <!-- create judgment button -->
           </div> <!-- end of the judgmentday div -->
 
@@ -187,6 +208,9 @@
               </p>
               </br>
             <input type="submit" value="submit present"/>
+
+            <br>
+
           </form>
         <!-- present creation form -->
       </div>
@@ -212,5 +236,9 @@
   <!--  yield  -->
 </div> <!-- end alltab div -->
 <%= javascript_include_tag 'angular', 'data-turbolinks-track' => true %>
+
+<!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
+
 </body>
 </html>
