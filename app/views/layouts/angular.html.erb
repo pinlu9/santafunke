@@ -130,6 +130,7 @@
                   <td>{{judgment.description}}</td>
                   <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
                   <td><button ng-click="judgmentCtrl.deleteJudgment(judgment)">Delete</td>
+                  <td><button ng-click="judgmentCtrl.displayEdit(judgment, $event)">Edit</td>
                 </tr>
               </tbody>
             </table>

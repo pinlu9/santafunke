@@ -232,14 +232,46 @@ SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope,
     });
   };
 
-  this.editJudgment = function(){
-    var judgment_id = controller.judgment_id;
-    $http.post('/judgments/' + judgment_id,{
-      authenticity_token: authenticity_token,
-      judgment: {
+  this.displayEdit = function(judgment, $event){
+    console.log($event.path[2].children);
+    $event.path[2].innerHTML =
+      '<div class="edit-judgment-form">' +
+        '<form ng-submit="judgmentCtrl.editJudgment(' + judgment.id + ')">' +
+          '<input type="text" ng-model="judgmentCtrl.edited_description" value="' + judgment.description +  '"/>' +
+          // '<input type="checkbox" ng-model="judgmentCtrl.edited_naughty" id="filled-in-box" class="filled-in"/>' +
+          // '<label for="filled-in-box">Check this if they were naughty!</label>' +
+          '<input type="text" ng-model="judgmentCtrl.edited_qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>' +
+          '<input type="submit" value="submit"/>' +
+        '</form>'+
+      '</div>';
+  };
 
+  this.editJudgment = function(judgment_id){
+    var target = '/judgments/' + judgment_id;
+    $http.put(target, {
+      //include authenticity_token
+      authenticity_token: authenticity_token,
+      //values from form
+      judgment: {
+        // elf_name: controller.elfName,  // can just use currentUserName instead
+        child_id: $scope.$parent.child.id,
+        elf_name: currentUserName,
+        elf_id: currentUserId,
+        description: controller.description,
+        qualifying_adverb: controller.qualifyingAdverb,
+        naughty: controller.naughty
       }
-    }).then(function(data){},function(error){});
+    }).then(function(data){
+      console.log("judgment post data is: ", data);
+      // find a way to push this into the displayed array of judgments in the parent
+      controller.description = "";
+      controller.qualifyingAdverb = "";
+      $scope.$parent.child.judgments.push(data.data);
+      console.log(data.data);
+    },function(error){
+      // do what
+    });
+
   };
 
 
