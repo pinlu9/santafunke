@@ -26,7 +26,7 @@ SantaFunke.controller('SessionController', ['$http', function($http){
 
 
 /* START Login controller */
-SantaFunke.controller('LoginController', function() {
+SantaFunke.controller('UserController', function() {
     var controller = this;
 
     controller.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
@@ -63,6 +63,18 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
     //what should we do with the errors?
   });
 
+  this.refresh = function(){
+    $http.get('/users/children').then(function(data){
+      // the get /users should return a data object containing all of the children
+      controller.children = data.data.children;
+      // console.log(data);
+    }, function(error){
+      //what should we do with the errors?
+    });
+  };
+
+
+
 }]);
 
 /* END User Controller */
@@ -98,16 +110,7 @@ SantaFunke.controller('ToyController', ['$http', function($http){
   this.get_all_toys();
 
    //hits presents#index which should return the toys that belong to the current user THROUGH presents
-  this.get_my_presents = function(){
-    $http.get('/presents').then(function(data){
-      controller.my_toys = data.data.presents;
-      // data.data.presents[index].child / toy / elf
-    }, function(error){
-      //do what
-    });
-  };
-  /* Call the function on instantiation */
-  this.get_my_presents();
+
 
   this.createToy = function(){
     // temporarily add to the list until the AJAX query completes
@@ -207,9 +210,43 @@ SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope,
       controller.description = "";
       controller.qualifyingAdverb = "";
       $scope.$parent.child.judgments.push(data.data);
+      console.log(data.data);
     },function(error){
       // do what
     });
+  };
+
+  this.deleteJudgment = function(judgment){
+    // target works, it hits the correct route
+    console.log(judgment);
+    var judgment_id = judgment.id;
+    var target = '/judgments/' + judgment_id;
+    $http.delete(target, {
+      authenticity_token: authenticity_token,
+    }).then(function(data){
+      console.log("Successfully Deleted: " + judgment_id);
+      console.log($scope.$parent.$parent);
+      $scope.$parent.$parent.naughtyNiceCtrl.refresh();
+      /* The magic shiiiiz :: refreshes all everything*/
+    },function(error){
+    });
+  };
+
+  this.editJudgment = function(judgment, $index){
+    var judgment_id = judgment.id;
+    var target = '/judgments/' + judgment_id;
+    console.log($scope);
+
+    // $http.delete(target, {
+    //   authenticity_token: authenticity_token,
+    // }).then(function(data){
+    //   console.log("Successfully Deleted: " + judgment_id);
+    //   console.log($scope.$parent.$parent);
+    //   $scope.$parent.$parent.naughtyNiceCtrl.refresh();
+    //   $scope.judgmentCtrl.description = judgment.description;
+    //   /* The magic shiiiiz :: refreshes all everything*/
+    // },function(error){
+    // });
   };
 
 
@@ -218,6 +255,40 @@ SantaFunke.controller('JudgmentController', ['$scope', '$http', function($scope,
 
 
 /* End Judgement Controller */
+SantaFunke.controller('JudgmentsController', ['$scope', '$http', function($scope, $http){
+  var controller = this;
+  var authenticity_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  // console.log("$scope.$parent is: ", $scope.$parent);
+  // console.log("current user info: ", currentUserId, currentUserName);
+
+  this.createJudgment = function(){
+    console.log("inside of createJudgment function!");
+    $http.post('/judgments', {
+      //include authenticity_token
+      authenticity_token: authenticity_token,
+      //values from form
+      judgment: {
+        // elf_name: controller.elfName,  // can just use currentUserName instead
+        child_id: $scope.$parent.child.id,
+        elf_name: currentUserName,
+        elf_id: currentUserId,
+        description: controller.description,
+        qualifying_adverb: controller.qualifyingAdverb,
+        naughty: controller.naughty
+      }
+    }).then(function(data){
+      console.log("judgment post data is: ", data);
+      // find a way to push this into the displayed array of judgments in the parent
+      controller.description = "";
+      controller.qualifyingAdverb = "";
+      $scope.$parent.child.judgments.push(data.data);
+      console.log(data.data);
+    },function(error){
+      // do what
+    });
+  };
+}]);
+
 
 
 
