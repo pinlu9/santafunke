@@ -21,6 +21,10 @@ class JudgmentsController < ApplicationController
   def show
   end
 
+  def edit
+    # edit judgment
+  end
+
   private
 
   def judgment_info
