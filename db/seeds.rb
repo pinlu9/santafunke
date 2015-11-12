@@ -6,30 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-require 'faker'
-
-def people
-    User.create(name:"Bob Black",
-                  email: "bob.black@ga.com",
-                  type: "Child",
-                  toy: "Boat")
 
 
-    # 20.times do |n|
-    #   n = Child.new
-    #   n.name = Faker::Name.name
-    #   n.email = Faker::Internet.email
-    #   n.save
-      # city = Faker::AddressUS.city_suffix
-      # zipcode  = Faker::AddressUS.zip_code
-      # state = Faker::AddressUS.state
+Child.create({"name"=>"Jenny Blank", "email"=>"Jenny@ga.com", "password_digest"=>"password", "address"=>"10 delancey St New York, NY 10002", "age"=> "10"})
+Child.create({"name"=>"Adam Lebance", "email"=>"Adam@ga.com", "password_digest"=>"password", "address"=>"20 Adam St Flushing, NY 11302", "age"=> "15"})
+Child.create({"name"=>"Tracy Small", "email"=>"Tracy@ga.com", "password_digest"=>"password", "address"=>"100 Dean St Brooklyn, NY 11216", "age"=> "7"})
+Child.create({"name"=>"Jackie Li", "email"=>"Jackie@ga.com", "password_digest"=>"password", "address"=>"84 Teleance PL Bronx, NY 10302", "age"=> "11"})
 
-      10.times do |n|
-          n = Child.create
-          n.name = Faker::Name.name
-          n.email = Faker::Internet.email
-          n.password_digest = "test"
-          n.save
-
-    end
-  end
+Toy.create({"name"=>"Boat", "value"=>"1", "description"=>"Fun"})
+Toy.create({"name"=>"Water Gun", "value"=>"5", "description"=>"Fun"})
+Toy.create({"name"=>"Snowboard", "value"=>"1", "description"=>"Fun"})
+Toy.create({"name"=>"iPhone", "value"=>"1", "description"=>"Apple iPhone"})
