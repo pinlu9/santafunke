@@ -193,6 +193,7 @@
                 <td>{{present.toy.name}}</td>
                 <td>{{present.toy.value}}</td>
                 <td>{{present.toy.description}}</td>
+                <td><button ng-click="wishlistCtrl.deletePresent(present)">Delete</button></td>
               </tr>
             </tbody>
           </table>
@@ -202,10 +203,15 @@
         <!-- got this to work by nesting the ToyController within the SessionController -->
         <h5>Choose a present from the list!</h5>
           <form ng-submit="wishlistCtrl.createPresent()">
-              <p ng-repeat="toy in wishlistCtrl.all_toys">
-                <input ng-model="wishlistCtrl.toyID" type="radio" name="toys" id="{{ toy.id }}" value="{{ toy.id }}">
-                <label for="{{ toy.id }}"> {{toy.name}} </label>
-              </p>
+                <!-- <input ng-model="wishlistCtrl.toyID" type="radio" name="toys" id="{{ toy.id }}" value="{{ toy.id }}"> -->
+                <md-input-container flex>
+                  <label>Toys</label>
+                  <md-select ng-model="wishlistCtrl.toyID">
+                    <md-option ng-repeat="toy in wishlistCtrl.all_toys" value="{{toy.id}}">
+                      {{toy.name}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
               </br>
             <input type="submit" value="submit present"/>
 

@@ -1,5 +1,6 @@
 json.presents(@my_presents) do |my_present|
 
+  json.id my_present.id
   json.child_id my_present.child_id
   json.elf_id my_present.elf_id
   json.toy_id my_present.toy_id
