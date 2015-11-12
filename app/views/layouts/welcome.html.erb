@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html ng-app="SantaFunke">
+<head>
+  <title>SantaFunke</title>
+  <%= csrf_meta_tags %>
+
+  <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+
+  <!-- our own style sheet -->
+  <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
+
+  <!-- Angular Material Dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
+
+  <!-- Angular Material JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.js"></script>
+
+
+
+</head>
+<body>
+<nav>
+  <% if !current_user %>
+    <ul>
+      <form class="firstform"
+            action ="<%= session_path %>"
+            method="POST"
+            autocomplete="false">
+
+      <li><input type="hidden"
+                 name="authenticity_token"
+                 value="<%= form_authenticity_token %>"></li>
+
+      <li><input type="text"
+                     name ="user[email]"
+                     placeholder="Your email address"><li>
+
+      <li><input type="password"
+                     name="user[password]"
+                     placeholder="Password"><li/>
+
+      <li><input type ="submit"
+                     value="login"><li>
+      </form>
+    </ul>
+  <% else %>
+    <form action="<%= session_path %>" method="POST">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="_method" value="DELETE">
+      <button class="btn waves-effect waves-light" input type="submit" value="Log out!">Log out</button>
+    </form>
+  <% end %>
+</nav>
+
+<h1>Sign Up</h1>
+<div ng-controller="LoginController as user" layout="column" ng-cloak class="md-inline-form">
+    <form name="userForm">
+      <div layout layout-sm="column">
+        <md-input-container flex>
+          <label>Name</label>
+          <input ng-model="user.firstName">
+        </md-input-container>
+        <md-input-container flex>
+          <label>Last Name</label>
+          <input ng-model="user.lastName">
+        </md-input-container>
+      </div>
+      <md-input-container class="md-block">
+        <label>Address</label>
+        <input ng-model="user.address">
+      </md-input-container>
+      <md-input-container md-no-float class="md-block">
+        <input ng-model="user.address2" placeholder="Address 2">
+      </md-input-container>
+      <div layout layout-sm="column">
+        <md-input-container flex>
+          <label>City</label>
+          <input ng-model="user.city">
+        </md-input-container>
+        <md-input-container flex>
+          <label>State</label>
+          <md-select ng-model="user.state">
+            <md-option ng-repeat="state in user.states" value="{{state.abbrev}}">
+              {{state.abbrev}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container flex>
+          <label>Postal Code</label>
+          <input name="postalCode" ng-model="user.postalCode" placeholder="12345">
+          <!-- removed from ^^ tag :: required ng-pattern="/^[0-9]{5}$/" md-maxlength="5" -->
+          <!-- <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">You must supply a postal code.</div>
+            <div ng-message="pattern" class="my-message">That doesn't look like a valid postal
+              code.
+            </div>
+            <div ng-message="md-maxlength" class="my-message">
+              Don't use the long version silly...we don't need to be that specific...
+            </div>
+          </div> -->
+        </md-input-container>
+      </div>
+    </form>
+  </md-content>
+</div>
+
+
+
+<%= javascript_include_tag 'angular', 'data-turbolinks-track' => true %>
+<!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
+
+</body>
+</html>

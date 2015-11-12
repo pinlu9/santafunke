@@ -3,17 +3,27 @@
 <head>
   <title>SantaFunke</title>
   <%= csrf_meta_tags %>
-  <!-- Compiled and minified CSS -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
-   <!-- our own style sheet -->
-   <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
-   <!-- Angular -->
-   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" charset="utf-8"></script>
-   <!-- Jquery and Materialize.js -->
-   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js"></script>
+
+  <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+
+  <!-- our own style sheet -->
+  <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
+
+  <!-- Angular Material Dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
+
+  <!-- Angular Material JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.js"></script>
+
+
+
 </head>
 <body>
+
+
   <header>
     <nav>
         <!-- Christmas Countdown Start -->
@@ -52,7 +62,6 @@
     <br>
   </header>
 <!--  -->
-
 
   <!-- Session Things -->
   <div id="session-div"
@@ -187,6 +196,9 @@
               </p>
               </br>
             <input type="submit" value="submit present"/>
+
+            <br>
+
           </form>
         <!-- present creation form -->
       </div>
@@ -212,5 +224,9 @@
   <!--  yield  -->
 </div> <!-- end alltab div -->
 <%= javascript_include_tag 'angular', 'data-turbolinks-track' => true %>
+
+<!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
+
 </body>
 </html>

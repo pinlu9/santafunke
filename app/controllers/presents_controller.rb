@@ -38,6 +38,10 @@ class PresentsController < ApplicationController
   def show
   end
 
+  def edit
+    # edit present
+  end
+
   private
 
   def present_info
