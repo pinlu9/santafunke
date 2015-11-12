@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
+
   def index
     @users = User.all
   end
@@ -25,12 +27,13 @@ class UsersController < ApplicationController
         flash[:message] = @user.errors.full_messages.to_sentence
       end
 
-        redirect_to root_path
-      end
-
-      private
-
-      def user_params
-        return params.require(:user).permit(:name, :address, :type, :age, :email, :password)
-      end
+    redirect_to root_path
   end
+
+  private
+
+  def user_params
+    return params.require(:user).permit(:name, :address, :type, :age, :email, :password)
+  end
+
+end

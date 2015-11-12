@@ -57,7 +57,7 @@
 
 <h1>Sign Up</h1>
 <div ng-controller="UserController as user" layout="column" ng-cloak class="md-inline-form">
-    <form name="userForm">
+    <form name="userForm" ng-submit="user.createUser()">
       <div layout layout-sm="column">
         <md-input-container flex>
           <label>Email</label>
@@ -104,7 +104,7 @@
           </div> -->
         </md-input-container>
       </div>
-      <button ng-submit="user.createUser()">Submit</button>
+      <button type="submit">Submit</button>
     </form>
   </md-content>
 </div>

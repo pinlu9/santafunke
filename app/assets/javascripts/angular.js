@@ -26,7 +26,7 @@ SantaFunke.controller('SessionController', ['$http', function($http){
 
 
 /* START Login controller */
-SantaFunke.controller('UserController', function() {
+SantaFunke.controller('UserController', ['$http', function($http) {
     var controller = this;
 
     controller.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
@@ -39,11 +39,28 @@ SantaFunke.controller('UserController', function() {
 
     };
 
-    controller.signup = function(){
+    controller.createUser = function(){
+      controller.fullAddress = controller.address + " " + controller.city + " " + controller.state + " " + controller.postalCode;
+      $http.post('/users', {
+        authenticity_token: controller.authenticity_token,
+        user: {
+          email: controller.email,
+          password: controller.password,
+          name: controller.name,
+          age: controller.age,
+          address: controller.fullAddress,
+          type: controller.type,
+        }
+      }).then(function(data){
+        console.log(data);
+
+      },function(error){
+
+      });
 
     };
 
-});
+}]);
 /* END Login Controller */
 
 
@@ -320,33 +337,33 @@ SantaFunke.controller('JudgmentsController', ['$scope', '$http', function($scope
 // put it in the body in a script tag
 
 /* Countdown to Christmas Javascript */
-var end = new Date('12/25/2015');
-
-var _second = 1000;
-var _minute = _second * 60;
-var _hour = _minute * 60;
-var _day = _hour * 24;
-var timer;
-
-  function showRemaining() {
-      var now = new Date();
-      var distance = end - now;
-      if (distance < 0) {
-
-          clearInterval(timer);
-          document.getElementById('countdown').innerHTML = 'EXPIRED!';
-
-          return;
-      }
-      var days = Math.floor(distance / _day);
-      var hours = Math.floor((distance % _day) / _hour);
-      var minutes = Math.floor((distance % _hour) / _minute);
-      var seconds = Math.floor((distance % _minute) / _second);
-
-  document.getElementById('countdown').innerHTML = days + 'days ';
-      document.getElementById('countdown').innerHTML += hours + 'hrs ';
-      document.getElementById('countdown').innerHTML += minutes + 'mins ';
-      document.getElementById('countdown').innerHTML += seconds + 'secs';
-  }
-
-  timer = setInterval(showRemaining, 1000);
+// var end = new Date('12/25/2015');
+//
+// var _second = 1000;
+// var _minute = _second * 60;
+// var _hour = _minute * 60;
+// var _day = _hour * 24;
+// var timer;
+//
+//   function showRemaining() {
+//       var now = new Date();
+//       var distance = end - now;
+//       if (distance < 0) {
+//
+//           clearInterval(timer);
+//           document.getElementById('countdown').innerHTML = 'EXPIRED!';
+//
+//           return;
+//       }
+//       var days = Math.floor(distance / _day);
+//       var hours = Math.floor((distance % _day) / _hour);
+//       var minutes = Math.floor((distance % _hour) / _minute);
+//       var seconds = Math.floor((distance % _minute) / _second);
+//
+//   document.getElementById('countdown').innerHTML = days + 'days ';
+//       document.getElementById('countdown').innerHTML += hours + 'hrs ';
+//       document.getElementById('countdown').innerHTML += minutes + 'mins ';
+//       document.getElementById('countdown').innerHTML += seconds + 'secs';
+//   }
+//
+//   timer = setInterval(showRemaining, 1000);
