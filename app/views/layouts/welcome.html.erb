@@ -123,6 +123,9 @@
             </div>
           </div> -->
         </md-input-container>
+        <md-switch ng-model="user.type" ng-true-value="'Elf'" ng-false-value="'Child'" class="md-warn md-block">
+          Type: {{ user.type }}
+        </md-switch>
       </div>
       <button type="submit">Submit</button>
     </form>

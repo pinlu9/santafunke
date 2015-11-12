@@ -103,6 +103,7 @@
                 </tr>
               </thead>
               <tbody ng-repeat="present in child.presents">
+                <!-- instantiate present controller, add apply_elf method, create buttons for elf to add/remove self -->
                 <tr>
                   <td>{{present.toy.name}}</td>
                   <td>{{present.toy.value}}</td>
@@ -156,9 +157,9 @@
                   <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
                   <!-- <td></td> just a blank one to fill the column -->
                   <input type="text" ng-model="judgmentsCtrl.description" placeholder="Description"/>
-                  <input type="checkbox" ng-model="judgmentsCtrl.naughty" id="filled-in-box"
-                  class="filled-in"/>
-                  <label for="filled-in-box">Check this if they were naughty!</label>
+                    <md-switch ng-model="judgmentsCtrl.naughty" class="md-warn md-block">
+                      Naughty?: {{ judgmentsCtrl.naughty }}
+                    </md-switch>
                   <input type="text" ng-model="judgmentsCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
                   <input type="submit" value="submit"/>
                 </form>
