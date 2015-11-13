@@ -176,7 +176,7 @@ SantaFunke.controller('MapController', ['$scope', '$http', function($scope, $htt
     // console.log("and $scope.$parent.controller is: ", $scope.$parent.controller);
     // var kidzAddresses = [];
     geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var latlng = new google.maps.LatLng(90, 0);
     var mapOptions = {
       zoom: 4,
       center: latlng,
