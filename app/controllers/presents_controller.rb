@@ -1,10 +1,16 @@
 class PresentsController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
+
   # This is called by the get_presents method in the angular ToyController
   # We delegate .presents to User in order to query efficiently
   def index
+    @presents = Present.all
+  end
+
+  def mine
     # We know that User.toys correctly selects the toys through presents
-    @dummy_presents  = current_user.presents
+    @dummy_presents = current_user.presents
     @dummy_presents.each do |dummy_present|
       # trying to set object variables = to remote data (associated data)
       dummy_present.toy = Toy.find_by_id(dummy_present.toy_id)
@@ -13,7 +19,7 @@ class PresentsController < ApplicationController
         dummy_present.elf = Elf.find_by_id(dummy_present.elf_id)
       end
     end
-    @presents = @dummy_presents
+    @my_presents = @dummy_presents
       #first part in JSON, second part is ActRec Association
   end
 
@@ -32,6 +38,18 @@ class PresentsController < ApplicationController
   end
 
   def show
+  end
+
+  def edit
+    # edit present
+  end
+
+  def destroy
+    @present = Present.find_by_id(params[:id])
+    if @present.destroy
+      render json: @present
+    else
+    end
   end
 
   private
