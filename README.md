@@ -1,7 +1,7 @@
 # Project 3 - Santa Funke's List
 
-Hello. I am Santa Funke
-![Image of SantaFunke]  
+Hello. I am Santa Funke  
+![Image of SantaFunke]
 (http://i63.tinypic.com/2hcqaog.jpg)
 
 ## Group Name:
