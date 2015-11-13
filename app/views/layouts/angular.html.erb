@@ -4,10 +4,10 @@
   <title>SantaFunke</title>
   <!-- MAPPY THINGS IN THE HEAD -->
   <!-- Now trying just the google maps api instructions instead.. -->
-  <style type="text/css">
+  <!-- /*<style type="text/css">
         html, body { height: 100%; margin: 0; padding: 0; }
         #map { height: 50%; }
-  </style>
+  </style>*/ -->
 
   <%= csrf_meta_tags %>
 
@@ -32,19 +32,19 @@
 <body>
 
 
-  <header>
-    <nav>
+
+
         <!-- Christmas Countdown Start -->
-        <div id="countdown"></div>
+
         <!-- Christmas Countdown End -->
 
         <!-- Different Logout Form for Elf/Child -->
         <% if current_user.type === "Child" %>
-          <div class="nav-wrapper">
-        <% else %>
-          <div class="nav-wrapper teal lighten-1">
-        <% end %>
-           <form class="secondlogout"
+  <div id="countdown"></div>
+        <nav>
+    <div class=nav>
+        <div layout="row" layout-align="end start">
+           <form
                  action="<%= session_path %>"
                  method="POST">
              <input type="hidden"
@@ -53,19 +53,42 @@
              <input type="hidden"
                     name="_method"
                     value="DELETE">
-        <% if current_user.type === "Child" %>
-          <button class="btn waves-effect waves-light"
-                  type="submit"
-                  value="Log out!">Log out</button>
-        <% else %>
-          <button class="btn waves-effect red lighten-1"
-                  type="submit"
-                  value="Log out!">Log out</button>
-        <% end %>
+
+          <md-button class="btn1"type="submit"
+          value="Log Out!">Log Out</md-button>
+
+
            </form>
          </div>
-        <!-- End Different Logout Form for Elf/Child -->
     </nav>
+         <% else %>
+
+         <nav class="elf">
+           <div id="countdown"></div>
+
+             <div class=nav>
+                 <div layout="row" layout-align="end start">
+                    <form
+                          action="<%= session_path %>"
+                          method="POST">
+                      <input type="hidden"
+                             name="authenticity_token"
+                             value="<%= form_authenticity_token %>">
+                      <input type="hidden"
+                             name="_method"
+                             value="DELETE">
+
+                   <md-button class="btn1"type="submit"
+                   value="Log Out!">Log Out</md-button>
+
+
+                    </form>
+                  </div>
+
+         </nav>
+         <% end %>
+        <!-- End Different Logout Form for Elf/Child -->
+
     <br>
     <br>
   </header>
@@ -77,18 +100,20 @@
        <!-- singular because it'll only ever handle the currently logged in user -->
     <h1>
       Hello, {{sessionCtrl.current_user.type}} {{sessionCtrl.current_user.name}}!
-      <br>
-      <marquee  width=400 height=100><img src="http://mybirdie.ca/files/how-santa-got-his-reindeer.gif" height="100px"></marquee>
-      <img src="http://i.giphy.com/A27PZDSLuK6ys.gif" width= "35%">
+
+      <!-- <marquee  width=400 height=100><img src="http://mybirdie.ca/files/how-santa-got-his-reindeer.gif" height="100px"></marquee>
+      <!-- <img src="http://i.giphy.com/A27PZDSLuK6ys.gif" width= "35%"> -->
     </h1>
-    <h4 class="alltab">
+    <h3 class="alltab">
       <% if current_user.type === "Child" %>
       You are {{sessionCtrl.current_user.age}} years old. You've grown so much in the past year!
       <% end %>
+
       <% if current_user.type === "Elf" %>
-      <h5 class="alltab">GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!</h5>
+
+      <h3 class="alltab">GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!</h3>
       <% end %>
-    </h4>
+    </h3>
     <br>
   </div>
   <!-- End Session Things -->
@@ -190,21 +215,65 @@
 <% if current_user.type === "Child" %>
 
     <!-- child avatar image -->
-  <img src="http://1.bp.blogspot.com/-dZWOzEoZHs0/UDILL8QE-hI/AAAAAAAACog/o1V4u2WwFk0/s1600/SMART+BOY+FB.jpg" height="100">
+  <!-- <img src="http://1.bp.blogspot.com/-dZWOzEoZHs0/UDILL8QE-hI/AAAAAAAACog/o1V4u2WwFk0/s1600/SMART+BOY+FB.jpg" height="100"> -->
+
+  <center><h3>Create your Toy!</h3>
+   <form ng-submit="wishlistCtrl.createToy()" class="form3">
+       <md-input-container class="md-block">
+     <input type="text" ng-model="wishlistCtrl.newToyName" placeholder="toy name"/>
+   </md-input-container>
+     <md-input-container class="md-block">
+     <input type="number" ng-model="wishlistCtrl.newToyValue" placeholder="toy value"/>
+   </md-input-container>
+     <md-input-container class="md-block">
+     <input type="text" ng-model="wishlistCtrl.newToyDescription" placeholder="toy description"/>
+   </md-input-container>
+       <md-button class="btn1"type="submit" value="submit toy">Submit</md-button>
+   </form>
+ </center>
+
+
+<center><img src="http://cliparts.co/cliparts/kiM/nRn/kiMnRnArT.png" width="70%"></center>
+
+
+    <div ng-controller="ToyController as wishlistCtrl">
+<div id="create-present">
+  <!-- got this to work by nesting the ToyController within the SessionController -->
+  <h3>Choose a present from the list!</h3>
+    <form ng-submit="wishlistCtrl.createPresent()">
+          <!-- <input ng-model="wishlistCtrl.toyID" type="radio" name="toys" id="{{ toy.id }}" value="{{ toy.id }}"> -->
+          <md-input-container flex>
+            <label>Toys</label>
+            <md-select ng-model="wishlistCtrl.toyID">
+              <md-option ng-repeat="toy in wishlistCtrl.all_toys" value="{{toy.id}}">
+                {{toy.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </br>
+  <center>  <md-button class="btn1" type="submit" value="submit present"/>Submit</md-button></center>
+
+      <br>
+
+    </form>
+  <!-- present creation form -->
+</div>
 
   <!-- Map for child view! -->
-  <h5>Maybe Santa will bring you a present here..</h5>
-  <div id="map" style="width: 50%; margin: 0 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapInChildView"></div>
+  <div class="mapmap"
 
+  <br>
+  <div id="map" style="width: 50%; margin: 0 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapInChildView"></div>
+</div>
   <!-- Please note, the code for this is predicated on current_user being a Child -->
     <!-- The use of "wishlistCtrl" is an attempt to be semantic, we want to use this model as the portal to all wishlist stuff
          Toy creation, toy reading, present creation, toy editing FB/KW -->
-    <div ng-controller="ToyController as wishlistCtrl">
+
       <!-- my_toys -->
-      <h5>These are presents!</h5>
+      <h4>These are presents!</h4>
       <div class="wishlist">
           <!-- 'GET' /presents must return current_user's -->
-          <table class="highlight">
+          <table class="table">
             <thead>
               <tr>
                 <th data-field="id">Name</th>
@@ -217,46 +286,30 @@
                 <td>{{present.toy.name}}</td>
                 <td>{{present.toy.value}}</td>
                 <td>{{present.toy.description}}</td>
-                <td><button ng-click="wishlistCtrl.deletePresent(present)">Delete</button></td>
+                <td>  <md-button class="btn3" ng-click="wishlistCtrl.deletePresent(present)">Delete</md-button></td>
               </tr>
             </tbody>
           </table>
         </div>
+           </div>
           <!-- end presents list -->
-      <div id="create-present">
-        <!-- got this to work by nesting the ToyController within the SessionController -->
-        <h5>Choose a present from the list!</h5>
-          <form ng-submit="wishlistCtrl.createPresent()">
-                <!-- <input ng-model="wishlistCtrl.toyID" type="radio" name="toys" id="{{ toy.id }}" value="{{ toy.id }}"> -->
-                <md-input-container flex>
-                  <label>Toys</label>
-                  <md-select ng-model="wishlistCtrl.toyID">
-                    <md-option ng-repeat="toy in wishlistCtrl.all_toys" value="{{toy.id}}">
-                      {{toy.name}}
-                    </md-option>
-                  </md-select>
-                </md-input-container>
-              </br>
-            <input type="submit" value="submit present"/>
 
-            <br>
-
-          </form>
-        <!-- present creation form -->
-      </div>
       <!-- all_toys -->
 
+         </div>
+         <footer>
+
+         </footer>
+
+<!-- <center><img src="http://www.wilsoninfo.com/christmas-clipart/christmas-tree-1.gif" height="10%"></center> -->
 
     <!-- createToy start -->
-    <h5>Create your Toy!</h5>
-     <form ng-submit="wishlistCtrl.createToy()" class="form3">
-       <input type="text" ng-model="wishlistCtrl.newToyName" placeholder="toy name"/>
-       <input type="number" ng-model="wishlistCtrl.newToyValue" placeholder="toy value"/>
-       <input type="text" ng-model="wishlistCtrl.newToyDescription" placeholder="toy description"/>
-       <input type="submit" value="submit toy" />
-     </form>
+
      <!-- createToy end -->
    </div> <!-- closes toy controller -->
+
+
+
 
 <% end %>
 </div>
@@ -265,6 +318,16 @@
 
   <!--  yield  -->
 </div> <!-- end alltab div -->
+
+
+<center><div id="container">
+  <!-- Other elements here -->
+  <div id="copyright">
+    SantaFunke
+  </div>
+</div></center>
+
+
 <%= javascript_include_tag 'angular', 'data-turbolinks-track' => true %>
 
 <!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->

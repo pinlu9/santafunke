@@ -21,7 +21,10 @@
 
 
 </head>
-<body ng-controller="UserController as user">
+
+<body  class="snow"
+        ng-controller="UserController as user">
+
 <!-- <nav>
   <% if !current_user %>
     <ul>
@@ -55,31 +58,41 @@
   <% end %>
 </nav> -->
 
-<h1>Log In</h1>
-<!-- Nope, this action needs to be taken after the ajax ng-route -->
-<form name="userLogin" ng-submit="user.login()">
-  <div layout layout-sm="column">
-    <md-input-container flex>
+<!-- <h1>Log In</h1> -->
+<div layout="row" layout-align="end start">
+<form action="<%= application_angular_path %>"
+      method="GET" name="userLogin"
+      ng-submit="user.login()">
+  <div class="login"
+  layout layout-sm="row">
+    <md-input-container flex-offset-sm>
       <label>Email</label>
       <input ng-model="user.loginEmail">
     </md-input-container>
-    <md-input-container flex>
+  <md-input-container flex-offset-sm>
       <label>Password</label>
-      <input type="password" ng-model="user.loginPassword">
+      <input type="password"
+            ng-model="user.loginPassword">
     </md-input-container>
-  </div>
-  <button type="submit">Submit</button>
+
+  <md-button class="btn1"
+              type="submit">Log In</md-button>
+                </div>
 </form>
+</div>
 
 <h1>Sign Up</h1>
-<div layout="column" ng-cloak class="md-inline-form">
+
+    <center> <img src="http://doestakeout.net/images/8/8d/Christmas_lights_2014_002.gif"></center>
+<div layout="row" layout-align="center center">
+<div layout="row" ng-cloak class="md-inline-form">
     <form name="userForm" ng-submit="user.createUser()">
       <div layout layout-sm="column">
-        <md-input-container flex>
+        <md-input-container layout-align="center">
           <label>Email</label>
           <input ng-model="user.email">
         </md-input-container>
-        <md-input-container flex>
+        <md-input-container layout-align="center">
           <label>Name</label>
           <input ng-model="user.name">
         </md-input-container>
@@ -88,7 +101,7 @@
           <input type="number" ng-model="user.age">
         </md-input-container>
       </div>
-      <md-input-container flex>
+      <md-input-container layout-align="center">
         <label>Password</label>
         <input type="password" ng-model="user.password">
       </md-input-container>
@@ -97,11 +110,11 @@
         <input ng-model="user.address">
       </md-input-container>
       <div layout layout-sm="column">
-        <md-input-container flex>
+        <md-input-container layout-align="center">
           <label>City</label>
           <input ng-model="user.city">
         </md-input-container>
-        <md-input-container flex>
+        <md-input-container flex="33">
           <label>State</label>
           <md-select ng-model="user.state">
             <md-option ng-repeat="state in user.states" value="{{state.abbrev}}">
@@ -109,7 +122,7 @@
             </md-option>
           </md-select>
         </md-input-container>
-        <md-input-container flex>
+        <md-input-container layout-align="center">
           <label>Postal Code</label>
           <input name="postalCode" ng-model="user.postalCode" placeholder="12345">
           <!-- removed from ^^ tag :: required ng-pattern="/^[0-9]{5}$/" md-maxlength="5" -->
@@ -123,15 +136,19 @@
             </div>
           </div> -->
         </md-input-container>
+        </md-input-container>
         <md-switch ng-model="user.type" ng-true-value="'Elf'" ng-false-value="'Child'" class="md-warn md-block">
           Type: {{ user.type }}
         </md-switch>
+
       </div>
-      <button type="submit">Submit</button>
+    <div layout="row" layout-align="center center">
+      <md-button class="btn1"type="submit">Submit</md-button>
+      </div>
     </form>
   </md-content>
 </div>
-
+</div>
 
 
 <%= javascript_include_tag 'angular', 'data-turbolinks-track' => true %>
@@ -139,4 +156,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
 
 </body>
+</div>
 </html>
