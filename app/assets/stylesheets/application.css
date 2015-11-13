@@ -14,10 +14,13 @@
  *= require_self
  */
 
+body {
+  margin-bottom: 100px;
+}
+
  h1 {
    text-align: center;
  }
-
 
  .alert {
    margin-top: 20px;

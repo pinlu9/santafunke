@@ -44,5 +44,4 @@ class JudgmentsController < ApplicationController
             .permit(:child_id, :elf_name, :elf_id, :description, :qualifying_adverb, :naughty)
   end
 
-
 end
