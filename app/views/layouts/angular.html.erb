@@ -2,13 +2,6 @@
 <html ng-app="SantaFunke">
 <head>
   <title>SantaFunke</title>
-  <!-- MAPPY THINGS IN THE HEAD -->
-  <!-- Now trying just the google maps api instructions instead.. -->
-  <style type="text/css">
-        html, body { height: 100%; margin: 0; padding: 0; }
-        #map { height: 50%; }
-  </style>
-
   <%= csrf_meta_tags %>
 
   <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
@@ -25,248 +18,132 @@
   <!-- Angular Material JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.js"></script>
 
-  <!-- Another google maps cdn that i've had to include.. -->
-  <script src="http://maps.googleapis.com/maps/api/js?language=en"></script>
+
 
 </head>
-<body>
+<body ng-controller="UserController as user">
+<!-- <nav>
+  <% if !current_user %>
+    <ul>
+      <form class="firstform"
+            action ="<%= session_path %>"
+            method="POST"
+            autocomplete="false">
 
+      <li><input type="hidden"
+                 name="authenticity_token"
+                 value="<%= form_authenticity_token %>"></li>
 
-  <header>
-    <nav>
-        <!-- Christmas Countdown Start -->
-        <div id="countdown"></div>
-        <!-- Christmas Countdown End -->
+      <li><input type="text"
+                     name ="user[email]"
+                     placeholder="Your email address"><li>
 
-        <!-- Different Logout Form for Elf/Child -->
-        <% if current_user.type === "Child" %>
-          <div class="nav-wrapper">
-        <% else %>
-          <div class="nav-wrapper teal lighten-1">
-        <% end %>
-           <form class="secondlogout"
-                 action="<%= session_path %>"
-                 method="POST">
-             <input type="hidden"
-                    name="authenticity_token"
-                    value="<%= form_authenticity_token %>">
-             <input type="hidden"
-                    name="_method"
-                    value="DELETE">
-        <% if current_user.type === "Child" %>
-          <button class="btn waves-effect waves-light"
-                  type="submit"
-                  value="Log out!">Log out</button>
-        <% else %>
-          <button class="btn waves-effect red lighten-1"
-                  type="submit"
-                  value="Log out!">Log out</button>
-        <% end %>
-           </form>
-         </div>
-        <!-- End Different Logout Form for Elf/Child -->
-    </nav>
-    <br>
-    <br>
-  </header>
-<!--  -->
+      <li><input type="password"
+                     name="user[password]"
+                     placeholder="Password"><li/>
 
-  <!-- Session Things -->
-  <div id="session-div"
-       ng-controller="SessionController as sessionCtrl">
-       <!-- singular because it'll only ever handle the currently logged in user -->
-    <h1>
-      Hello, {{sessionCtrl.current_user.type}} {{sessionCtrl.current_user.name}}!
-      <br>
-      <marquee  width=400 height=100><img src="http://mybirdie.ca/files/how-santa-got-his-reindeer.gif" height="100px"></marquee>
-      <img src="http://i.giphy.com/A27PZDSLuK6ys.gif" width= "35%">
-    </h1>
-    <h4 class="alltab">
-      <% if current_user.type === "Child" %>
-      You are {{sessionCtrl.current_user.age}} years old. You've grown so much in the past year!
-      <% end %>
-      <% if current_user.type === "Elf" %>
-      <h5 class="alltab">GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!</h5>
-      <% end %>
-    </h4>
-    <br>
-  </div>
-  <!-- End Session Things -->
-
-<div class="alltab"> <!-- whole page contained in this div -->
-  <!-- Start naughty/nice elf "partial" -->
-  <% if current_user.type === "Elf" %>
-    <!-- Instantiate the list of children using the ChildrenController -->
-    <div id="naughty-nice" ng-controller="ChildrenController as naughtyNiceCtrl">
-      <!-- Trying to render a map with all children on there as markers -->
-      <h5>...like these children!</h5>
-      <div id="map" style="width: 50%; margin: 0 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapAndMarkersInElfView"></div>
-      <div class="child" ng-repeat="child in naughtyNiceCtrl.children">
-        <!-- entirety of the child view. click to expand the child's wishlist. -->
-        <h4>{{child.name}}</h4></br>
-        <div class="wishlist">
-            <table class="highlight">
-              <thead>
-                <tr>
-                  <th data-field="name">Name</th>
-                  <th data-field="value">Value</th>
-                  <th data-field="description">Description</th>
-                </tr>
-              </thead>
-              <tbody ng-repeat="present in child.presents">
-                <!-- instantiate present controller, add apply_elf method, create buttons for elf to add/remove self -->
-                <tr>
-                  <td>{{present.toy.name}}</td>
-                  <td>{{present.toy.value}}</td>
-                  <td>{{present.toy.description}}</td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-
-        <!-- start judgment "partial" -->
-      <hr>
-        <div class="judgment_day">
-          <div ng-controller="JudgmentsController as judgmentsCtrl">
-            <table class="highlight">
-              <thead>
-                <tr>
-                  <th data-field="description">Description</th>
-                  <th data-field="elf_name">Judger</th>
-                  <th data-field="naughtiness">Naughty?</th>
-                </tr>
-              </thead>
-              <tbody class="judgment" ng-repeat="judgment in child.judgments" ng-controller="JudgmentController as judgmentCtrl" ng-init="judgmentCtrl.editing=false">
-                <tr ng-hide="judgmentCtrl.editing">
-                  <td>{{judgment.description}}</td>
-                  <td>{{judgment.elf_name}}</td>
-                  <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
-                  <td><button ng-click="judgmentCtrl.deleteJudgment(judgment)">Delete</button></td>
-                  <td><button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Edit</button></td>
-                </tr>
-                <tr ng-show="judgmentCtrl.editing">
-
-                      <td>
-                        <form ng-submit="judgmentCtrl.editJudgment(judgment)">
-                        <md-input-container flex>
-                          <label>Description</label>
-                          <input ng-model="judgment.description">
-                        </md-input-container>
-                        <md-input-container flex>
-                          <label>Adverb describing the naughtiness / niceness!</label>
-                          <input ng-model="judgment.qualifying_adverb">
-                        </md-input-container>
-                        <button type="submit" ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button>
-                        </form>
-                      </td>
-
-                </tr>
-
-              </tbody>
-            </table>
-              <!-- judgment creation form -->
-              <h5>Submit a new judgment!</h5>
-
-                <form ng-submit="judgmentsCtrl.createJudgment()">
-                  <!-- just using the currentUserName variable in angular.js instead of capturing it on the form -->
-                  <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
-                  <!-- <td></td> just a blank one to fill the column -->
-                  <input type="text" ng-model="judgmentsCtrl.description" placeholder="Description"/>
-                    <md-switch ng-model="judgmentsCtrl.naughty" class="md-warn md-block">
-                      Naughty?: {{ judgmentsCtrl.naughty }}
-                    </md-switch>
-                  <input type="text" ng-model="judgmentsCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
-                  <input type="submit" value="submit"/>
-                </form>
-          </div>
-            <!-- create judgment button -->
-          </div> <!-- end of the judgmentday div -->
-
-      </div> <!-- closes the ng-repeat per child -->
-    </div> <!-- closes the ChildrenController -->
+      <li><input type ="submit"
+                     value="login"><li>
+      </form>
+    </ul>
+  <% else %>
+    <form action="<%= session_path %>" method="POST">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="_method" value="DELETE">
+      <button class="btn waves-effect waves-light" input type="submit" value="Log out!">Log out</button>
+    </form>
   <% end %>
+</nav> -->
 
-  <!-- Start wishlist "partial" -->
-<% if current_user.type === "Child" %>
+<!-- <h1>Log In</h1> -->
+<div layout="row" layout-align="end start">
+<form action="<%= application_angular_path %>"
+      method="GET" name="userLogin"
+      ng-submit="user.login()">
+  <div class="login"
+  layout layout-sm="row">
+    <md-input-container flex-offset-sm>
+      <label>Email</label>
+      <input ng-model="user.loginEmail">
+    </md-input-container>
+  <md-input-container flex-offset-sm>
+      <label>Password</label>
+      <input type="password"
+            ng-model="user.loginPassword">
+    </md-input-container>
 
-    <!-- child avatar image -->
-  <img src="http://1.bp.blogspot.com/-dZWOzEoZHs0/UDILL8QE-hI/AAAAAAAACog/o1V4u2WwFk0/s1600/SMART+BOY+FB.jpg" height="100">
-
-  <!-- Map for child view! -->
-  <h5>Maybe Santa will bring you a present here..</h5>
-  <div id="map" style="width: 50%; margin: 0 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapInChildView"></div>
-
-  <!-- Please note, the code for this is predicated on current_user being a Child -->
-    <!-- The use of "wishlistCtrl" is an attempt to be semantic, we want to use this model as the portal to all wishlist stuff
-         Toy creation, toy reading, present creation, toy editing FB/KW -->
-    <div ng-controller="ToyController as wishlistCtrl">
-      <!-- my_toys -->
-      <h5>These are presents!</h5>
-      <div class="wishlist">
-          <!-- 'GET' /presents must return current_user's -->
-          <table class="highlight">
-            <thead>
-              <tr>
-                <th data-field="id">Name</th>
-                <th data-field="name">Value</th>
-                <th data-field="price">Description</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="present in wishlistCtrl.my_toys">
-              <tr>
-                <td>{{present.toy.name}}</td>
-                <td>{{present.toy.value}}</td>
-                <td>{{present.toy.description}}</td>
-                <td><button ng-click="wishlistCtrl.deletePresent(present)">Delete</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-          <!-- end presents list -->
-      <div id="create-present">
-        <!-- got this to work by nesting the ToyController within the SessionController -->
-        <h5>Choose a present from the list!</h5>
-          <form ng-submit="wishlistCtrl.createPresent()">
-                <!-- <input ng-model="wishlistCtrl.toyID" type="radio" name="toys" id="{{ toy.id }}" value="{{ toy.id }}"> -->
-                <md-input-container flex>
-                  <label>Toys</label>
-                  <md-select ng-model="wishlistCtrl.toyID">
-                    <md-option ng-repeat="toy in wishlistCtrl.all_toys" value="{{toy.id}}">
-                      {{toy.name}}
-                    </md-option>
-                  </md-select>
-                </md-input-container>
-              </br>
-            <input type="submit" value="submit present"/>
-
-            <br>
-
-          </form>
-        <!-- present creation form -->
-      </div>
-      <!-- all_toys -->
-
-
-    <!-- createToy start -->
-    <h5>Create your Toy!</h5>
-     <form ng-submit="wishlistCtrl.createToy()" class="form3">
-       <input type="text" ng-model="wishlistCtrl.newToyName" placeholder="toy name"/>
-       <input type="number" ng-model="wishlistCtrl.newToyValue" placeholder="toy value"/>
-       <input type="text" ng-model="wishlistCtrl.newToyDescription" placeholder="toy description"/>
-       <input type="submit" value="submit toy" />
-     </form>
-     <!-- createToy end -->
-   </div> <!-- closes toy controller -->
-
-<% end %>
+  <md-button class="btn1"
+              type="submit">Log In</md-button>
+                </div>
+</form>
 </div>
 
-  <!-- End wishlist "partial" -->
+<h1>Sign Up</h1>
 
-  <!--  yield  -->
-</div> <!-- end alltab div -->
+    <center> <img src="http://doestakeout.net/images/8/8d/Christmas_lights_2014_002.gif"></center>
+<div layout="row" layout-align="center center">
+<div layout="row" ng-cloak class="md-inline-form">
+    <form name="userForm" ng-submit="user.createUser()">
+      <div layout layout-sm="column">
+        <md-input-container layout-align="center">
+          <label>Email</label>
+          <input ng-model="user.email">
+        </md-input-container>
+        <md-input-container layout-align="center">
+          <label>Name</label>
+          <input ng-model="user.name">
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Age</label>
+          <input type="number" ng-model="user.age">
+        </md-input-container>
+      </div>
+      <md-input-container layout-align="center">
+        <label>Password</label>
+        <input type="password" ng-model="user.password">
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Address</label>
+        <input ng-model="user.address">
+      </md-input-container>
+      <div layout layout-sm="column">
+        <md-input-container layout-align="center">
+          <label>City</label>
+          <input ng-model="user.city">
+        </md-input-container>
+        <md-input-container flex="33">
+          <label>State</label>
+          <md-select ng-model="user.state">
+            <md-option ng-repeat="state in user.states" value="{{state.abbrev}}">
+              {{state.abbrev}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container layout-align="center">
+          <label>Postal Code</label>
+          <input name="postalCode" ng-model="user.postalCode" placeholder="12345">
+          <!-- removed from ^^ tag :: required ng-pattern="/^[0-9]{5}$/" md-maxlength="5" -->
+          <!-- <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">You must supply a postal code.</div>
+            <div ng-message="pattern" class="my-message">That doesn't look like a valid postal
+              code.
+            </div>
+            <div ng-message="md-maxlength" class="my-message">
+              Don't use the long version silly...we don't need to be that specific...
+            </div>
+          </div> -->
+        </md-input-container>
+      </div>
+    <div layout="row" layout-align="center center">
+      <md-button class="btn1"type="submit">Submit</md-button>
+      </div>
+    </form>
+  </md-content>
+</div>
+</div>
+
+
 <%= javascript_include_tag 'angular', 'data-turbolinks-track' => true %>
-
 <!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
 
