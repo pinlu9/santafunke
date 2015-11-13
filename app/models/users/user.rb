@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true, uniqueness: true
   validates :password_digest, length: { minimum: 8, allow_nil: true}
+  validates :address, presence: true
 
   def self.types
     %w(Child Elf)

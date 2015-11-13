@@ -1,2 +1,6 @@
 log/*.log
 tmp/**/*
+<<<<<<< HEAD
+=======
+config/database.yml
+>>>>>>> 2e25b5140101658a60f5cc4e6a79bacad50ff1fb

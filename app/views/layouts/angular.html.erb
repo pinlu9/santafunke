@@ -2,95 +2,336 @@
 <html ng-app="SantaFunke">
 <head>
   <title>SantaFunke</title>
-  <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
+  <!-- MAPPY THINGS IN THE HEAD -->
+  <!-- Now trying just the google maps api instructions instead.. -->
+  <!-- /*<style type="text/css">
+        html, body { height: 100%; margin: 0; padding: 0; }
+        #map { height: 50%; }
+  </style>*/ -->
+
   <%= csrf_meta_tags %>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js" charset="utf-8"></script>
+
+  <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+
+  <!-- our own style sheet -->
+  <%= stylesheet_link_tag    'angular', media: 'all', 'data-turbolinks-track' => true %>
+
+  <!-- Angular Material Dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
+
+  <!-- Angular Material JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.js"></script>
+
+  <!-- Another google maps cdn that i've had to include.. -->
+  <script src="http://maps.googleapis.com/maps/api/js?language=en"></script>
+
 </head>
 <body>
-  <header>
-    <form action="<%= session_path %>" method="POST">
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <input type="hidden" name="_method" value="DELETE">
-      <button class="btn waves-effect waves-light" input type="submit" value="Log out!">Log out</button>
-    </form>
+
+
+
+
+        <!-- Christmas Countdown Start -->
+
+        <!-- Christmas Countdown End -->
+
+        <!-- Different Logout Form for Elf/Child -->
+        <% if current_user.type === "Child" %>
+  <div id="countdown"></div>
+        <nav>
+    <div class=nav>
+        <div layout="row" layout-align="end start">
+           <form
+                 action="<%= session_path %>"
+                 method="POST">
+             <input type="hidden"
+                    name="authenticity_token"
+                    value="<%= form_authenticity_token %>">
+             <input type="hidden"
+                    name="_method"
+                    value="DELETE">
+
+          <md-button class="btn1"type="submit"
+          value="Log Out!">Log Out</md-button>
+
+
+           </form>
+         </div>
+    </nav>
+         <% else %>
+
+         <nav class="elf">
+           <div id="countdown"></div>
+
+             <div class=nav>
+                 <div layout="row" layout-align="end start">
+                    <form
+                          action="<%= session_path %>"
+                          method="POST">
+                      <input type="hidden"
+                             name="authenticity_token"
+                             value="<%= form_authenticity_token %>">
+                      <input type="hidden"
+                             name="_method"
+                             value="DELETE">
+
+                   <md-button class="btn1"type="submit"
+                   value="Log Out!">Log Out</md-button>
+
+
+                    </form>
+                  </div>
+
+         </nav>
+         <% end %>
+        <!-- End Different Logout Form for Elf/Child -->
+
+    <br>
+    <br>
   </header>
+<!--  -->
+
+  <!-- Session Things -->
   <div id="session-div"
        ng-controller="SessionController as sessionCtrl">
        <!-- singular because it'll only ever handle the currently logged in user -->
     <h1>
       Hello, {{sessionCtrl.current_user.type}} {{sessionCtrl.current_user.name}}!
+
+      <!-- <marquee  width=400 height=100><img src="http://mybirdie.ca/files/how-santa-got-his-reindeer.gif" height="100px"></marquee>
+      <!-- <img src="http://i.giphy.com/A27PZDSLuK6ys.gif" width= "35%"> -->
     </h1>
-    <h2>
+    <h3 class="alltab">
       <% if current_user.type === "Child" %>
       You are {{sessionCtrl.current_user.age}} years old. You've grown so much in the past year!
       <% end %>
+
       <% if current_user.type === "Elf" %>
-      GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!
+
+      <h3 class="alltab">GET BACK TO WORK! THERE ARE CHILDREN TO BE JUDGED!</h3>
       <% end %>
-    </h2>
+    </h3>
+    <br>
+  </div>
+  <!-- End Session Things -->
+
+<div class="alltab"> <!-- whole page contained in this div -->
+  <!-- Start naughty/nice elf "partial" -->
+  <% if current_user.type === "Elf" %>
+    <!-- Instantiate the list of children using the ChildrenController -->
+    <div id="naughty-nice" ng-controller="ChildrenController as naughtyNiceCtrl">
+      <!-- Trying to render a map with all children on there as markers -->
+      <h5>...like these children!</h5>
+      <div id="map" style="width: 50%; margin: 0 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapAndMarkersInElfView"></div>
+      <div class="child" ng-repeat="child in naughtyNiceCtrl.children">
+        <!-- entirety of the child view. click to expand the child's wishlist. -->
+        <h4>{{child.name}}</h4></br>
+        <div class="wishlist">
+            <table class="highlight">
+              <thead>
+                <tr>
+                  <th data-field="name">Name</th>
+                  <th data-field="value">Value</th>
+                  <th data-field="description">Description</th>
+                </tr>
+              </thead>
+              <tbody ng-repeat="present in child.presents">
+                <!-- instantiate present controller, add apply_elf method, create buttons for elf to add/remove self -->
+                <tr>
+                  <td>{{present.toy.name}}</td>
+                  <td>{{present.toy.value}}</td>
+                  <td>{{present.toy.description}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <!-- start judgment "partial" -->
+      <hr>
+        <div class="judgment_day">
+          <div ng-controller="JudgmentsController as judgmentsCtrl">
+            <table class="highlight">
+              <thead>
+                <tr>
+                  <th data-field="description">Description</th>
+                  <th data-field="elf_name">Judger</th>
+                  <th data-field="naughtiness">Naughty?</th>
+                </tr>
+              </thead>
+              <tbody class="judgment" ng-repeat="judgment in child.judgments" ng-controller="JudgmentController as judgmentCtrl" ng-init="judgmentCtrl.editing=false">
+                <tr ng-hide="judgmentCtrl.editing">
+                  <td>{{judgment.description}}</td>
+                  <td>{{judgment.elf_name}}</td>
+                  <td>{{judgment.qualifying_adverb}} {{judgment.naughty}}</td>
+                  <td><button ng-click="judgmentCtrl.deleteJudgment(judgment)">Delete</button></td>
+                  <td><button ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Edit</button></td>
+                </tr>
+                <tr ng-show="judgmentCtrl.editing">
+
+                      <td>
+                        <form ng-submit="judgmentCtrl.editJudgment(judgment)">
+                        <md-input-container flex>
+                          <label>Description</label>
+                          <input ng-model="judgment.description">
+                        </md-input-container>
+                        <md-input-container flex>
+                          <label>Adverb describing the naughtiness / niceness!</label>
+                          <input ng-model="judgment.qualifying_adverb">
+                        </md-input-container>
+                        <button type="submit" ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button>
+                        </form>
+                      </td>
+
+                </tr>
+
+              </tbody>
+            </table>
+              <!-- judgment creation form -->
+              <h5>Submit a new judgment!</h5>
+
+                <form ng-submit="judgmentsCtrl.createJudgment()">
+                  <!-- just using the currentUserName variable in angular.js instead of capturing it on the form -->
+                  <!-- <td><input type="hidden" ng-model="judgmentCtrl.elfName" readonly value="{{judgmentCtrl.elfName}}"/></td> -->
+                  <!-- <td></td> just a blank one to fill the column -->
+                  <input type="text" ng-model="judgmentsCtrl.description" placeholder="Description"/>
+                    <md-switch ng-model="judgmentsCtrl.naughty" class="md-warn md-block">
+                      Naughty?: {{ judgmentsCtrl.naughty }}
+                    </md-switch>
+                  <input type="text" ng-model="judgmentsCtrl.qualifyingAdverb" placeholder="HOW naughty or nice? (Write adverb here!)"/>
+                  <input type="submit" value="submit"/>
+                </form>
+          </div>
+            <!-- create judgment button -->
+          </div> <!-- end of the judgmentday div -->
+
+      </div> <!-- closes the ng-repeat per child -->
+    </div> <!-- closes the ChildrenController -->
+  <% end %>
 
   <!-- Start wishlist "partial" -->
-  <% if current_user.type === "Child" %>
+<% if current_user.type === "Child" %>
+
+    <!-- child avatar image -->
+  <!-- <img src="http://1.bp.blogspot.com/-dZWOzEoZHs0/UDILL8QE-hI/AAAAAAAACog/o1V4u2WwFk0/s1600/SMART+BOY+FB.jpg" height="100"> -->
+
+  <center><h3>Create your Toy!</h3>
+   <form ng-submit="wishlistCtrl.createToy()" class="form3">
+       <md-input-container class="md-block">
+     <input type="text" ng-model="wishlistCtrl.newToyName" placeholder="toy name"/>
+   </md-input-container>
+     <md-input-container class="md-block">
+     <input type="number" ng-model="wishlistCtrl.newToyValue" placeholder="toy value"/>
+   </md-input-container>
+     <md-input-container class="md-block">
+     <input type="text" ng-model="wishlistCtrl.newToyDescription" placeholder="toy description"/>
+   </md-input-container>
+       <md-button class="btn1"type="submit" value="submit toy">Submit</md-button>
+   </form>
+ </center>
+
+
+<center><img src="http://cliparts.co/cliparts/kiM/nRn/kiMnRnArT.png" width="70%"></center>
+
+
+    <div ng-controller="ToyController as wishlistCtrl">
+<div id="create-present">
+  <!-- got this to work by nesting the ToyController within the SessionController -->
+  <h3>Choose a present from the list!</h3>
+    <form ng-submit="wishlistCtrl.createPresent()">
+          <!-- <input ng-model="wishlistCtrl.toyID" type="radio" name="toys" id="{{ toy.id }}" value="{{ toy.id }}"> -->
+          <md-input-container flex>
+            <label>Toys</label>
+            <md-select ng-model="wishlistCtrl.toyID">
+              <md-option ng-repeat="toy in wishlistCtrl.all_toys" value="{{toy.id}}">
+                {{toy.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </br>
+  <center>  <md-button class="btn1" type="submit" value="submit present"/>Submit</md-button></center>
+
+      <br>
+
+    </form>
+  <!-- present creation form -->
+</div>
+
+  <!-- Map for child view! -->
+  <div class="mapmap"
+
+  <br>
+  <div id="map" style="width: 50%; margin: 0 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapInChildView"></div>
+</div>
   <!-- Please note, the code for this is predicated on current_user being a Child -->
     <!-- The use of "wishlistCtrl" is an attempt to be semantic, we want to use this model as the portal to all wishlist stuff
          Toy creation, toy reading, present creation, toy editing FB/KW -->
-    <div class="wishlist" ng-controller="ToyController as wishlistCtrl">
+
       <!-- my_toys -->
-      <div ng-repeat="present in wishlistCtrl.my_toys" class="present">
-        <!-- 'GET' /presents must return current_user's -->
-        <h1>This is a present!</h1>
-          <div class="present_toy">
-            name: {{present.toy.name}}
-            value: {{present.toy.value}}
-            descript: {{present.toy.description}}
-          </div>
-          <!-- We dont need more info for the child view -->
-            <div class="present_child">
-              child name: {{present.child.name}}
-            </div>
-            <div class="present_elf">
-              elf name: {{present.elf.name}}
-            </div>
-      </div>
-      <!-- end presents list -->
-      <div id="create-present">
-
-        <!-- got this to work by nesting the ToyController within the SessionController -->
-
-        <!-- <h1 style="color: blue">current user id is: {{ sessionCtrl.current_user.id }}</h1> -->
-        <h2>Choose a present from the list!</h2>
-        <form ng-submit="wishlistCtrl.createPresent()">
-          <!-- couldn't get this working.. came up with solution in angular.js instead -->
-          <!-- <input type="hidden" name="wishlistCtrl.current_user_id" value="{{ sessionCtrl.current_user.id }}"> -->
-          <select ng-model="wishlistCtrl.toyID">
-            <option ng-repeat="toy in wishlistCtrl.all_toys"
-              value="{{ toy.id }}">
-            {{toy.name}}</option>
-          </select>
-          <input type="submit" value="submit present" />
-        </form>
-        <!-- present creation form -->
-      </div>
+      <h4>These are presents!</h4>
+      <div class="wishlist">
+          <!-- 'GET' /presents must return current_user's -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th data-field="id">Name</th>
+                <th data-field="name">Value</th>
+                <th data-field="price">Description</th>
+              </tr>
+            </thead>
+            <tbody ng-repeat="present in wishlistCtrl.my_toys">
+              <tr>
+                <td>{{present.toy.name}}</td>
+                <td>{{present.toy.value}}</td>
+                <td>{{present.toy.description}}</td>
+                <td>  <md-button class="btn3" ng-click="wishlistCtrl.deletePresent(present)">Delete</md-button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+           </div>
+          <!-- end presents list -->
 
       <!-- all_toys -->
 
+         </div>
+         <footer>
+
+         </footer>
+
+<!-- <center><img src="http://www.wilsoninfo.com/christmas-clipart/christmas-tree-1.gif" height="10%"></center> -->
 
     <!-- createToy start -->
-    <h2>Create your Toy!</h2>
-     <form ng-submit="wishlistCtrl.createToy()">
-       <input type="text" ng-model="wishlistCtrl.newToyName" placeholder="toy name"/>
-       <input type="number" ng-model="wishlistCtrl.newToyValue" placeholder="toy value"/>
-       <input type="text" ng-model="wishlistCtrl.newToyDescription" placeholder="toy description"/>
-       <input type="submit" value="submit toy" />
-     </form>
-     <!-- createToy end -->
-    </div>
 
-  </div>
+     <!-- createToy end -->
+   </div> <!-- closes toy controller -->
+
+
+
+
 <% end %>
+</div>
+
   <!-- End wishlist "partial" -->
 
   <!--  yield  -->
-  <%= javascript_include_tag 'angular', 'data-turbolinks-track' => true %>
+</div> <!-- end alltab div -->
+
+
+<center><div id="container">
+  <!-- Other elements here -->
+  <div id="copyright">
+    SantaFunke
+  </div>
+</div></center>
+
+
+<%= javascript_include_tag 'angular', 'data-turbolinks-track' => true %>
+
+<!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
+
 </body>
 </html>

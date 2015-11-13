@@ -1,0 +1,153 @@
+/*.logoutsecond {
+  float: right;
+}*/
+
+.buttondemoBasicUsage section {
+  background: #f7f7f7;
+  border-radius: 3px;
+  text-align: center;
+  margin: 1em;
+  position: relative !important;
+  padding-bottom: 10px; }
+.buttondemoBasicUsage md-content {
+  margin-right: 7px; }
+.buttondemoBasicUsage section .md-button {
+  margin-top: 16px;
+  margin-bottom: 16px; }
+.buttondemoBasicUsage .label {
+  position: absolute;
+  bottom: 5px;
+  left: 7px;
+  font-size: 14px;
+  opacity: 0.54; }
+
+h1 {
+  text-align: center;
+}
+
+.namelogo{
+  margin: -27px;
+  float: left;
+}
+
+.background2 {
+  background-color: #2bbbad;
+  color: white;
+}
+
+.secondlogout {
+   float: right;
+   margin-right: 50px;
+ }
+
+.session-div, .box{
+   margin-left: 50px;
+   text-decoration: none;
+   list-style: none;
+ }
+
+.alltab{
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.form3 {
+
+  width: 50%;
+}
+
+.highlight{
+  width: 50%;
+  text-align: center;
+  /* this is set to fifty percent so we can put a map next to the presents */
+}
+
+marquee {
+  position: absolute;
+}
+
+#countdown{
+  position: absolute;
+  margin-left: 50px;
+  width: 20%;
+}
+
+.child {
+  border: 2px solid black;
+}
+
+#map {
+  height: 300px;
+  width: 500px;
+  box-shadow: 3px 3px 10px gray;
+}
+
+/*-------------------*/
+
+h1, h3, h2{
+
+  text-align: center;
+
+}
+
+.btn1{
+  background-color: #26a69a ;
+  height: 43px;
+  color: white;
+}
+
+
+
+.btn2{
+  background-color: #ef9a9a ;
+  height: 43px;
+  color: white;
+}
+.md-button:not([disabled]):hover {
+  background-color: #ff3d00;
+}
+.snow{
+background-image: url('http://i.giphy.com/4M6xlFxZskH8A.gif');
+ background-size: cover;}
+
+ .countdown{
+   background-color: red;
+ }
+
+#map{
+  float: right;
+}
+
+nav{
+  background-color: #ef9a9a;
+}
+
+.elf{
+  background-color: #26a69a;
+}
+
+
+
+.btn3{
+
+  background-color: #ef9a9a ;
+  height: 34px;
+  color: white;
+}
+
+#mapmap{
+  margin-right: 0px;
+  text-align: right;
+}
+
+.area{
+position: relative;
+}
+
+
+/*h2{
+  text-align: right;
+}*/
+ /*.deer{
+   background-image: url("https://0.s3.envato.com/files/68457572/preview.jpg");
+ }*/
