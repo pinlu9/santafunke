@@ -80,3 +80,8 @@ marquee {
   width: 500px;
   box-shadow: 3px 3px 10px gray;
 }
+
+body {
+  width: 800px;
+  margin: auto;
+}
