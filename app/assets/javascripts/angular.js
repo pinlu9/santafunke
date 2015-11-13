@@ -68,10 +68,16 @@ SantaFunke.controller('UserController', ['$http', '$scope', function($http, $sco
 
     controller.createUser = function(){
       controller.fullAddress = controller.address + " " + controller.city + " " + controller.state + " " + controller.postalCode;
+
+      // some addresses are being saved as "undefined undefined undefined undefined" in db if the fields in the signup form are left blank. going to set it to something else, here, if that is the case--otherwise the maps will break.
+      if (controller.fullAddress === "undefined undefined undefined undefined") {
+        controller.fullAddress = "101 St Nicholas Dr, North Pole, AK 99705";
+      }
+
       $http.post('/users', {
         authenticity_token: controller.authenticity_token,
         user: {
-          email: controller.email,
+          email: controller.email.toLowerCase(),
           password: controller.password,
           name: controller.name,
           age: controller.age,

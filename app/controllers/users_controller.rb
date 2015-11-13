@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-      if @user.save
+      if @user.save && @user.authenticate(user_params[:password])
         flash[:message] = "You are logged in!"
       else
         flash[:message] = @user.errors.full_messages.to_sentence
