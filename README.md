@@ -1,5 +1,8 @@
 # Project 3 - Santa Funke's List
 
+Hello. I am Santa Funke
+http://i63.tinypic.com/2hcqaog.jpg
+
 ## Group Name:
 Pin Lu
 Andy Oh
