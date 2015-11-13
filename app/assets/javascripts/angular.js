@@ -6,6 +6,7 @@ var currentUserId;
 var currentUserName;
 var currentUserAddress;
 var kidzAddresses = [];
+var kidzNamez = []; // have to store these, too, for popups.
 
 // this will allow us to execute functions after the Angular template has been completely loaded.. got it from: http://gsferreira.com/archive/2015/03/angularjs-after-render-directive/
 SantaFunke.directive('afterRender', ['$timeout', function ($timeout) {
@@ -120,8 +121,10 @@ SantaFunke.controller('ChildrenController', ['$http', function($http){
     controller.children = data.data.children;
     for (var i = 0; i < controller.children.length; i++) {
       kidzAddresses.push(controller.children[i].address);
+      kidzNamez.push(controller.children[i].name);
     }
     console.log("inside of ChildrenController callback, kidzAddresses is now: ", kidzAddresses);
+    console.log("kidzNamez is: ", kidzNamez);
   }, function(error){
     //what should we do with the errors?
   });
@@ -185,27 +188,37 @@ SantaFunke.controller('MapController', ['$scope', '$http', function($scope, $htt
     //   kidzAddresses.push(children[i].address);
     // }
 
-    controller.codeAddress(kidzAddresses);
+    controller.codeAddress(kidzAddresses, kidzNamez);
   };
 
-  this.codeAddress = function(addresses) {
+  this.codeAddress = function(addresses, names) {
+    var name;
     for (var j = 0; j < addresses.length; j++) {
-      geocoder.geocode( { 'address': addresses[j]}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          map.setCenter(results[0].geometry.location);
-          var marker = new google.maps.Marker({
-              map: map,
-              position: results[0].geometry.location,
-              animation: google.maps.Animation.DROP,
-              icon: "http://www.dollywood.com/~/media/ParkContent/DW_COM/DW/Festivals/Icons/christmas_logo.ashx"
-              // icon: "http://images3.wikia.nocookie.net/__cb20110806110719/pvzcc/images/a/a7/Emoticon_epicface.png"
-              //also an option:
-              // icon: "http://forums.childrenwithdiabetes.com/images/smilies/catchu.gif"
-          });
-        } else {
-          alert("Santa could not find you for the following reason: " + status);
-        }
-      });
+      for (var k = 0; j < names.length; k++) {
+        name = names[k];
+        geocoder.geocode( { 'address': addresses[j]}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            var popup = new google.maps.InfoWindow({
+              content: names[k]
+            });
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+                animation: google.maps.Animation.DROP,
+                icon: "http://www.dollywood.com/~/media/ParkContent/DW_COM/DW/Festivals/Icons/christmas_logo.ashx"
+                // icon: "http://images3.wikia.nocookie.net/__cb20110806110719/pvzcc/images/a/a7/Emoticon_epicface.png"
+                //also an option:
+                // icon: "http://forums.childrenwithdiabetes.com/images/smilies/catchu.gif"
+            });
+            marker.addListener('click', function() {
+              popup.open(map, marker);
+            });
+          } else {
+            alert("Santa could not find you for the following reason: " + status);
+          }
+        });
+      }
     }
   };
 
