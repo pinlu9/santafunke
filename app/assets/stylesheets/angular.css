@@ -80,3 +80,11 @@ marquee {
   width: 500px;
   box-shadow: 3px 3px 10px gray;
 }
+
+body {
+  width: 800px;
+  margin: auto;
+  background-image: url('http://i.giphy.com/4M6xlFxZskH8A.gif');
+  background-size: cover;
+  background-repeat: repeat;
+}
