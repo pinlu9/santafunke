@@ -192,33 +192,40 @@ SantaFunke.controller('MapController', ['$scope', '$http', function($scope, $htt
   };
 
   this.codeAddress = function(addresses, names) {
-    var name;
+    // var name;
+    // var index;
     for (var j = 0; j < addresses.length; j++) {
-      for (var k = 0; j < names.length; k++) {
-        name = names[k];
-        geocoder.geocode( { 'address': addresses[j]}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            map.setCenter(results[0].geometry.location);
-            var popup = new google.maps.InfoWindow({
-              content: names[k]
-            });
-            var marker = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location,
-                animation: google.maps.Animation.DROP,
-                icon: "http://www.dollywood.com/~/media/ParkContent/DW_COM/DW/Festivals/Icons/christmas_logo.ashx"
-                // icon: "http://images3.wikia.nocookie.net/__cb20110806110719/pvzcc/images/a/a7/Emoticon_epicface.png"
-                //also an option:
-                // icon: "http://forums.childrenwithdiabetes.com/images/smilies/catchu.gif"
-            });
-            marker.addListener('click', function() {
-              popup.open(map, marker);
-            });
-          } else {
-            alert("Santa could not find you for the following reason: " + status);
-          }
-        });
-      }
+      // var index = j;
+      // console.log("index: ", index);
+      // var name = names[index];
+      // console.log("name: ", name);
+      geocoder.geocode( { 'address': addresses[j]}, function(results, status) {
+        // name = names[j];
+        // console.log("name inside of geocode function: ", name);
+        if (status == google.maps.GeocoderStatus.OK) {
+          map.setCenter(results[0].geometry.location);
+          // var name = names[j];
+          // Can't get the dang name to work, going to put in a goofy message instead..
+          console.log("about to add popups..");
+          var popup = new google.maps.InfoWindow({
+            content: "A child lives here! But, for security reasons, Santa obviously can't tell you who.."
+          });
+          var marker = new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location,
+              animation: google.maps.Animation.DROP,
+              icon: "http://www.dollywood.com/~/media/ParkContent/DW_COM/DW/Festivals/Icons/christmas_logo.ashx"
+              // icon: "http://images3.wikia.nocookie.net/__cb20110806110719/pvzcc/images/a/a7/Emoticon_epicface.png"
+              //also an option:
+              // icon: "http://forums.childrenwithdiabetes.com/images/smilies/catchu.gif"
+          });
+          marker.addListener('click', function() {
+            popup.open(map, marker);
+          });
+        } else {
+          alert("Santa could not find you for the following reason: " + status);
+        }
+      });
     }
   };
 
