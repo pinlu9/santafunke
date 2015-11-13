@@ -149,8 +149,12 @@
                       <td>
                         <form ng-submit="judgmentCtrl.editJudgment(judgment)">
                         <md-input-container flex>
-                          <label>description</label>
+                          <label>Description</label>
                           <input ng-model="judgment.description">
+                        </md-input-container>
+                        <md-input-container flex>
+                          <label>Adverb describing the naughtiness / niceness!</label>
+                          <input ng-model="judgment.qualifying_adverb">
                         </md-input-container>
                         <button type="submit" ng-click="judgmentCtrl.editing=!judgmentCtrl.editing">Save</button>
                         </form>
