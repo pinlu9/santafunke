@@ -20,7 +20,7 @@
 
 # create some children..
 
-20.times do |child|
+10.times do |child|
   child = Child.new
   child.name = Faker::Name.name
   child.email = Faker::Internet.email
@@ -51,20 +51,20 @@ end
   toy.save
 end
 
-20.times do |present|
+5.times do |present|
   present = Present.new
-  present.child_id = Faker::Number.number(1)
-  present.elf_id = Faker::Number.number(1)
-  present.toy_id = Faker::Number.number(1)
+  present.child_id = Faker::Number.number(1).to_i + 1
+  present.elf_id = Faker::Number.number(1).to_i + 1
+  present.toy_id = Faker::Number.number(1).to_i + 1
 
   present.save
 end
 
-20.times do |judgment|
+5.times do |judgment|
   judgment = Judgment.new
-  judgment.child_id = Faker::Number.number(1)
-  judgment.elf_id = Faker::Number.number(1)
-  judgment.description = Faker::Lorem.sentence
+  judgment.child_id = Faker::Number.number(1).to_i + 1
+  judgment.elf_id = Faker::Number.number(1).to_i + 1
+  judgment.description = Faker::Company.catch_phrase
   judgment.naughty = true;
   judgment.qualifying_adverb = Faker::Company.buzzword
 
