@@ -138,20 +138,30 @@ POST /judgments will take a JSON object as such:
 For this app, we used:
 * HTML / CSS
 * Ruby on Rails
-* JavaScript
+* JavaScript / jQuery
 * PostgreSQL
 * ActiveRecord
 * Angular
+* Angular Material
 * Google Maps API
 
 ## Approach Taken
 
 We started off by debating what sort of app we wanted to build, and decided that we wanted to make something that would track a holiday wishlist, but that would also allow you to tell Santa whether or not your friends have been naughty or nice!
 
+We then determined what our general model structure would be, and created wireframes / user stories for our app. We decided that we would use one model table, and that we would have two user types within this table, and thus use single table inheritance. Truly a learning experience!
+
+Then, we set up Rails, and then our models and migrations. From there, we were off and running. We split up the work so that two of us were working on the front end, and the other two worked on the back end. We spent a lot of time working in small conference rooms, with one computer hooked up to the smart TV, so that we could collaborate in real-time. Doing so made our process much easier in that we could throw around ideas and incorporate them immediately, and could also avoid serious merge errors. When we worked outside of the conference room setting, we were in contact with one another through Slack.
+
+All in all, we're happy with our final product, and we hope that you enjoy creating your holiday wishlist (and also tattling on your friends / enemies). 
+
 ## Installation Instructions
 
+You can use our SantaFunke app [here](https://santafunke.herokuapp.com/).
+
 ## Unsolved Problems
-* Can't get user names to render on Google Maps markers. Also, sometimes the markers do not load at all. 
+* Can't get user names to render on Google Maps markers. Also, sometimes the markers do not load at all.
 * Wanted to award points to users for each judgment that they make, so that they earn more 'Santa Points' and thus can obtain more valuable presents.
 * Also, wanted to give users negative points if they have been on the receiving end of too many naughty judgments!
 * Mechanism for having the elf choose a toy from a child's wishlist has not been built.
+* Use CanCan to restrict access to particular resources based on user type.
