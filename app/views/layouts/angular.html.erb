@@ -110,9 +110,11 @@
 <!-- Instantiate the list of children using the ChildrenController -->
     <div id="naughty-nice" ng-controller="ChildrenController as naughtyNiceCtrl">
 <!-- Trying to render a map with all children on there as markers -->
-      <h5>...like these children!</h5>
 
-      <div id="map" style="width: 50%; margin: 0 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapAndMarkersInElfView"></div>
+
+      <div id="map" style="width: 100%; margin: -270 auto;" ng-controller="MapController as mapCtrl" after-render="mapCtrl.initializeMapAndMarkersInElfView"></div>
+
+  <h5>...like these children!</h5>
       <div class="child" ng-repeat="child in naughtyNiceCtrl.children">
 <!-- entirety of the child view. click to expand the child's wishlist. -->
         <h4>{{child.name}}</h4></br>
@@ -211,10 +213,11 @@
       </center>
       <center><img src="http://cliparts.co/cliparts/kiM/nRn/kiMnRnArT.png" width="70%"></center>
 
+<div layout="row" layout-align="center center">
       <div id="create-present">
 <!-- got this to work by nesting the ToyController within the SessionController -->
       <h3>Choose a present from the list!</h3>
-      <form ng-submit="wishlistCtrl.createPresent()">
+      <form class="select" ng-submit="wishlistCtrl.createPresent()">
 <!-- <input ng-model="wishlistCtrl.toyID" type="radio" name="toys" id="{{ toy.id }}" value="{{ toy.id }}"> -->
         <md-input-container flex>
           <label>Toys</label>
