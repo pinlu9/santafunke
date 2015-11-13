@@ -1,14 +1,14 @@
 # Project 3 - Santa Funke's List
 
 Hello. I am Santa Funke
-![Image of SantaFunke]
+![Image of SantaFunke]  
 (http://i63.tinypic.com/2hcqaog.jpg)
 
 ## Group Name:
-Pin Lu
-Andy Oh
-Finn Borge
-Kevin Walter
+Pin Lu  
+Andy Oh  
+Finn Borge  
+Kevin Walter  
 
 ## User Stories
 To reinvigorate the Christmas spirit in 21st century where children nowadays are on iPhone and computers, ordering toys from Amazon/Best Buy/Toy R Us, the elves have proposed that we should create a website for children to type in wish list and submit it to Santa Funke.
